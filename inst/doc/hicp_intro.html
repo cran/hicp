@@ -12,7 +12,7 @@
 
 <meta name="author" content="Sebastian Weinand" />
 
-<meta name="date" content="2024-02-02" />
+<meta name="date" content="2024-02-28" />
 
 <title>Introduction to the hicp-package</title>
 
@@ -363,7 +363,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Introduction to the
 <code>hicp</code>-package</h1>
 <h4 class="author">Sebastian Weinand</h4>
-<h4 class="date">02 February 2024</h4>
+<h4 class="date">28 February 2024</h4>
 
 
 <div id="TOC">
@@ -399,7 +399,7 @@ contributions</a></li>
 <p><br /><br /> The Harmonised Index of Consumer Prices (HICP) is the key
 economic figure to measure inflation in the euro area. The methodology
 underlying the HICP is documented in the HICP Methodological Manual
-<span class="citation">(Eurostat 2018)</span>. Based on this manual, the
+<span class="citation">(Eurostat 2024)</span>. Based on this manual, the
 <code>hicp</code>-package provides functions for data users to work with
 publicly available HICP price indices and weights (<em>upper-level
 aggregation</em>). The following vignette highlights the main package
@@ -437,11 +437,11 @@ update).</p>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 5:                                             HICP - country weights</span></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;             code lastUpdate  values</span></span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;           &lt;char&gt;     &lt;char&gt;   &lt;num&gt;</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 1: prc_hicp_cind 2024.01.17 2055179</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 2: prc_hicp_cann 2024.01.17 1877778</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 3: prc_hicp_cmon 2024.01.17 4080229</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 4:  prc_hicp_apc 2024.01.17  663480</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 5:  prc_hicp_cow 2024.02.01    2840</span></span></code></pre></div>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 1: prc_hicp_cind 2024.02.22 2068890</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 2: prc_hicp_cann 2024.02.22 1891436</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 3: prc_hicp_cmon 2024.02.22 4107592</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 4:  prc_hicp_apc 2024.02.22  717429</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 5:  prc_hicp_cow 2024.02.22    2921</span></span></code></pre></div>
 <p>The output above shows the first five HICP datasets. As can be seen,
 a short description of each dataset and some metadata are provided. The
 variable <code>code</code> is the dataset identifier, which is needed to
@@ -503,7 +503,7 @@ dataset.</p>
 <span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; 4:     AP     DE   2018 139.96   &lt;NA&gt;</span></span>
 <span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; 5:     AP     DE   2019 141.78   &lt;NA&gt;</span></span>
 <span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="fu">nrow</span>(item.weights) <span class="co"># number of observations</span></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; [1] 12938</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; [1] 13412</span></span>
 <span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="fu">unique</span>(item.weights<span class="sc">$</span>geo) <span class="co"># only EA, DE, and FR</span></span>
 <span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; [1] &quot;DE&quot; &quot;EA&quot; &quot;FR&quot;</span></span>
 <span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="fu">range</span>(item.weights<span class="sc">$</span>time) <span class="co"># since 2015</span></span>
@@ -638,103 +638,106 @@ codes is also denoted as the <em>COICOP tree</em> in this package.</p>
 <span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a><span class="co">#&gt;  9:     DE   2021   295 1000.00</span></span>
 <span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a><span class="co">#&gt; 10:     DE   2022   295 1000.00</span></span>
 <span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a><span class="co">#&gt; 11:     DE   2023   295 1000.00</span></span>
-<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a><span class="co">#&gt; 12:     EA   2017   295 1000.11</span></span>
-<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a><span class="co">#&gt; 13:     EA   2018   295 1000.05</span></span>
-<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a><span class="co">#&gt; 14:     EA   2019   295 1000.00</span></span>
-<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a><span class="co">#&gt; 15:     EA   2020   295  999.95</span></span>
-<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a><span class="co">#&gt; 16:     EA   2021   295  999.91</span></span>
-<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a><span class="co">#&gt; 17:     EA   2022   295 1000.08</span></span>
-<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a><span class="co">#&gt; 18:     EA   2023   295  999.98</span></span>
-<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a><span class="co">#&gt; 19:     EA   2024   295 1000.05</span></span>
-<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a><span class="co">#&gt; 20:     FR   2015   284  999.94</span></span>
-<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a><span class="co">#&gt; 21:     FR   2016   295  999.91</span></span>
-<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a><span class="co">#&gt; 22:     FR   2017   295 1000.01</span></span>
-<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a><span class="co">#&gt; 23:     FR   2018   295 1000.00</span></span>
-<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a><span class="co">#&gt; 24:     FR   2019   295 1000.04</span></span>
-<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a><span class="co">#&gt; 25:     FR   2020   295  999.99</span></span>
-<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a><span class="co">#&gt; 26:     FR   2021   295  999.94</span></span>
-<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a><span class="co">#&gt; 27:     FR   2022   295 1000.01</span></span>
-<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a><span class="co">#&gt; 28:     FR   2023   295 1000.04</span></span>
-<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a><span class="co">#&gt; 29:     FR   2024   295 1000.06</span></span>
-<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span>
-<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a></span>
-<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a><span class="co"># derive merged trees over time, but not across countries:</span></span>
-<span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a>item.weights[, <span class="st">&quot;tree2&quot;</span> <span class="sc">:=</span> <span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">by=</span>time, <span class="at">w=</span>values, <span class="at">w.tol=</span><span class="fl">0.1</span>), by<span class="ot">=</span><span class="st">&quot;geo&quot;</span>]</span>
-<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a>item.weights[tree2<span class="sc">==</span><span class="cn">TRUE</span>,</span>
-<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a>        <span class="fu">list</span>(<span class="st">&quot;n&quot;</span><span class="ot">=</span><span class="fu">uniqueN</span>(coicop),           <span class="co"># same selection over time in a country</span></span>
-<span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a>             <span class="st">&quot;w&quot;</span><span class="ot">=</span><span class="fu">sum</span>(values, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),  <span class="co"># weight sums should equal 1000</span></span>
-<span id="cb7-53"><a href="#cb7-53" tabindex="-1"></a>        by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;time&quot;</span>)]</span>
-<span id="cb7-54"><a href="#cb7-54" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span>
-<span id="cb7-55"><a href="#cb7-55" tabindex="-1"></a><span class="co">#&gt;     &lt;char&gt; &lt;char&gt; &lt;int&gt;   &lt;num&gt;</span></span>
-<span id="cb7-56"><a href="#cb7-56" tabindex="-1"></a><span class="co">#&gt;  1:     EA   2015    93  999.97</span></span>
-<span id="cb7-57"><a href="#cb7-57" tabindex="-1"></a><span class="co">#&gt;  2:     EA   2016    93  999.97</span></span>
-<span id="cb7-58"><a href="#cb7-58" tabindex="-1"></a><span class="co">#&gt;  3:     EA   2017    93 1000.01</span></span>
-<span id="cb7-59"><a href="#cb7-59" tabindex="-1"></a><span class="co">#&gt;  4:     EA   2018    93 1000.00</span></span>
-<span id="cb7-60"><a href="#cb7-60" tabindex="-1"></a><span class="co">#&gt;  5:     EA   2019    93 1000.00</span></span>
-<span id="cb7-61"><a href="#cb7-61" tabindex="-1"></a><span class="co">#&gt;  6:     EA   2020    93  999.99</span></span>
-<span id="cb7-62"><a href="#cb7-62" tabindex="-1"></a><span class="co">#&gt;  7:     EA   2021    93  999.99</span></span>
-<span id="cb7-63"><a href="#cb7-63" tabindex="-1"></a><span class="co">#&gt;  8:     EA   2022    93 1000.02</span></span>
-<span id="cb7-64"><a href="#cb7-64" tabindex="-1"></a><span class="co">#&gt;  9:     EA   2023    93 1000.04</span></span>
-<span id="cb7-65"><a href="#cb7-65" tabindex="-1"></a><span class="co">#&gt; 10:     EA   2024    93 1000.03</span></span>
-<span id="cb7-66"><a href="#cb7-66" tabindex="-1"></a><span class="co">#&gt; 11:     DE   2015   295 1000.00</span></span>
-<span id="cb7-67"><a href="#cb7-67" tabindex="-1"></a><span class="co">#&gt; 12:     DE   2016   295 1000.00</span></span>
-<span id="cb7-68"><a href="#cb7-68" tabindex="-1"></a><span class="co">#&gt; 13:     DE   2017   295 1000.00</span></span>
-<span id="cb7-69"><a href="#cb7-69" tabindex="-1"></a><span class="co">#&gt; 14:     DE   2018   295 1000.00</span></span>
-<span id="cb7-70"><a href="#cb7-70" tabindex="-1"></a><span class="co">#&gt; 15:     DE   2019   295 1000.00</span></span>
-<span id="cb7-71"><a href="#cb7-71" tabindex="-1"></a><span class="co">#&gt; 16:     DE   2020   295 1000.00</span></span>
-<span id="cb7-72"><a href="#cb7-72" tabindex="-1"></a><span class="co">#&gt; 17:     DE   2021   295 1000.00</span></span>
-<span id="cb7-73"><a href="#cb7-73" tabindex="-1"></a><span class="co">#&gt; 18:     DE   2022   295 1000.00</span></span>
-<span id="cb7-74"><a href="#cb7-74" tabindex="-1"></a><span class="co">#&gt; 19:     DE   2023   295 1000.00</span></span>
-<span id="cb7-75"><a href="#cb7-75" tabindex="-1"></a><span class="co">#&gt; 20:     FR   2015   284  999.94</span></span>
-<span id="cb7-76"><a href="#cb7-76" tabindex="-1"></a><span class="co">#&gt; 21:     FR   2016   284  999.92</span></span>
-<span id="cb7-77"><a href="#cb7-77" tabindex="-1"></a><span class="co">#&gt; 22:     FR   2017   284 1000.02</span></span>
-<span id="cb7-78"><a href="#cb7-78" tabindex="-1"></a><span class="co">#&gt; 23:     FR   2018   284  999.99</span></span>
-<span id="cb7-79"><a href="#cb7-79" tabindex="-1"></a><span class="co">#&gt; 24:     FR   2019   284 1000.03</span></span>
-<span id="cb7-80"><a href="#cb7-80" tabindex="-1"></a><span class="co">#&gt; 25:     FR   2020   284  999.98</span></span>
-<span id="cb7-81"><a href="#cb7-81" tabindex="-1"></a><span class="co">#&gt; 26:     FR   2021   284  999.94</span></span>
-<span id="cb7-82"><a href="#cb7-82" tabindex="-1"></a><span class="co">#&gt; 27:     FR   2022   284 1000.02</span></span>
-<span id="cb7-83"><a href="#cb7-83" tabindex="-1"></a><span class="co">#&gt; 28:     FR   2023   284 1000.04</span></span>
-<span id="cb7-84"><a href="#cb7-84" tabindex="-1"></a><span class="co">#&gt; 29:     FR   2024   284 1000.06</span></span>
-<span id="cb7-85"><a href="#cb7-85" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span>
-<span id="cb7-86"><a href="#cb7-86" tabindex="-1"></a></span>
-<span id="cb7-87"><a href="#cb7-87" tabindex="-1"></a><span class="co"># derive merged trees over countries and time:</span></span>
-<span id="cb7-88"><a href="#cb7-88" tabindex="-1"></a>item.weights[, <span class="st">&quot;tree3&quot;</span> <span class="sc">:=</span> <span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">by=</span><span class="fu">paste</span>(geo,time), <span class="at">w=</span>values, <span class="at">w.tol=</span><span class="fl">0.1</span>)]</span>
-<span id="cb7-89"><a href="#cb7-89" tabindex="-1"></a>item.weights[tree3<span class="sc">==</span><span class="cn">TRUE</span>,</span>
-<span id="cb7-90"><a href="#cb7-90" tabindex="-1"></a>        <span class="fu">list</span>(<span class="st">&quot;n&quot;</span><span class="ot">=</span><span class="fu">uniqueN</span>(coicop),           <span class="co"># same selection over time and across countries</span></span>
-<span id="cb7-91"><a href="#cb7-91" tabindex="-1"></a>             <span class="st">&quot;w&quot;</span><span class="ot">=</span><span class="fu">sum</span>(values, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),  <span class="co"># weight sums should equal 1000</span></span>
-<span id="cb7-92"><a href="#cb7-92" tabindex="-1"></a>        by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;time&quot;</span>)]</span>
-<span id="cb7-93"><a href="#cb7-93" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span>
-<span id="cb7-94"><a href="#cb7-94" tabindex="-1"></a><span class="co">#&gt;     &lt;char&gt; &lt;char&gt; &lt;int&gt;   &lt;num&gt;</span></span>
-<span id="cb7-95"><a href="#cb7-95" tabindex="-1"></a><span class="co">#&gt;  1:     DE   2015    93 1000.00</span></span>
-<span id="cb7-96"><a href="#cb7-96" tabindex="-1"></a><span class="co">#&gt;  2:     DE   2016    93 1000.00</span></span>
-<span id="cb7-97"><a href="#cb7-97" tabindex="-1"></a><span class="co">#&gt;  3:     DE   2017    93 1000.00</span></span>
-<span id="cb7-98"><a href="#cb7-98" tabindex="-1"></a><span class="co">#&gt;  4:     DE   2018    93 1000.00</span></span>
-<span id="cb7-99"><a href="#cb7-99" tabindex="-1"></a><span class="co">#&gt;  5:     DE   2019    93 1000.00</span></span>
-<span id="cb7-100"><a href="#cb7-100" tabindex="-1"></a><span class="co">#&gt;  6:     DE   2020    93 1000.00</span></span>
-<span id="cb7-101"><a href="#cb7-101" tabindex="-1"></a><span class="co">#&gt;  7:     DE   2021    93 1000.00</span></span>
-<span id="cb7-102"><a href="#cb7-102" tabindex="-1"></a><span class="co">#&gt;  8:     DE   2022    93 1000.00</span></span>
-<span id="cb7-103"><a href="#cb7-103" tabindex="-1"></a><span class="co">#&gt;  9:     DE   2023    93 1000.00</span></span>
-<span id="cb7-104"><a href="#cb7-104" tabindex="-1"></a><span class="co">#&gt; 10:     EA   2015    93  999.97</span></span>
-<span id="cb7-105"><a href="#cb7-105" tabindex="-1"></a><span class="co">#&gt; 11:     EA   2016    93  999.97</span></span>
-<span id="cb7-106"><a href="#cb7-106" tabindex="-1"></a><span class="co">#&gt; 12:     EA   2017    93 1000.01</span></span>
-<span id="cb7-107"><a href="#cb7-107" tabindex="-1"></a><span class="co">#&gt; 13:     EA   2018    93 1000.00</span></span>
-<span id="cb7-108"><a href="#cb7-108" tabindex="-1"></a><span class="co">#&gt; 14:     EA   2019    93 1000.00</span></span>
-<span id="cb7-109"><a href="#cb7-109" tabindex="-1"></a><span class="co">#&gt; 15:     EA   2020    93  999.99</span></span>
-<span id="cb7-110"><a href="#cb7-110" tabindex="-1"></a><span class="co">#&gt; 16:     EA   2021    93  999.99</span></span>
-<span id="cb7-111"><a href="#cb7-111" tabindex="-1"></a><span class="co">#&gt; 17:     EA   2022    93 1000.02</span></span>
-<span id="cb7-112"><a href="#cb7-112" tabindex="-1"></a><span class="co">#&gt; 18:     EA   2023    93 1000.04</span></span>
-<span id="cb7-113"><a href="#cb7-113" tabindex="-1"></a><span class="co">#&gt; 19:     EA   2024    93 1000.03</span></span>
-<span id="cb7-114"><a href="#cb7-114" tabindex="-1"></a><span class="co">#&gt; 20:     FR   2015    93  999.99</span></span>
-<span id="cb7-115"><a href="#cb7-115" tabindex="-1"></a><span class="co">#&gt; 21:     FR   2016    93  999.99</span></span>
-<span id="cb7-116"><a href="#cb7-116" tabindex="-1"></a><span class="co">#&gt; 22:     FR   2017    93 1000.04</span></span>
-<span id="cb7-117"><a href="#cb7-117" tabindex="-1"></a><span class="co">#&gt; 23:     FR   2018    93 1000.00</span></span>
-<span id="cb7-118"><a href="#cb7-118" tabindex="-1"></a><span class="co">#&gt; 24:     FR   2019    93 1000.00</span></span>
-<span id="cb7-119"><a href="#cb7-119" tabindex="-1"></a><span class="co">#&gt; 25:     FR   2020    93  999.99</span></span>
-<span id="cb7-120"><a href="#cb7-120" tabindex="-1"></a><span class="co">#&gt; 26:     FR   2021    93 1000.02</span></span>
-<span id="cb7-121"><a href="#cb7-121" tabindex="-1"></a><span class="co">#&gt; 27:     FR   2022    93 1000.03</span></span>
-<span id="cb7-122"><a href="#cb7-122" tabindex="-1"></a><span class="co">#&gt; 28:     FR   2023    93  999.98</span></span>
-<span id="cb7-123"><a href="#cb7-123" tabindex="-1"></a><span class="co">#&gt; 29:     FR   2024    93 1000.01</span></span>
-<span id="cb7-124"><a href="#cb7-124" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span></code></pre></div>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a><span class="co">#&gt; 12:     DE   2024   295 1000.00</span></span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a><span class="co">#&gt; 13:     EA   2017   295 1000.11</span></span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a><span class="co">#&gt; 14:     EA   2018   295 1000.05</span></span>
+<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a><span class="co">#&gt; 15:     EA   2019   295 1000.00</span></span>
+<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a><span class="co">#&gt; 16:     EA   2020   295  999.95</span></span>
+<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a><span class="co">#&gt; 17:     EA   2021   295  999.91</span></span>
+<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a><span class="co">#&gt; 18:     EA   2022   295 1000.08</span></span>
+<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a><span class="co">#&gt; 19:     EA   2023   295  999.98</span></span>
+<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a><span class="co">#&gt; 20:     EA   2024   295  999.98</span></span>
+<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a><span class="co">#&gt; 21:     FR   2015   284  999.94</span></span>
+<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a><span class="co">#&gt; 22:     FR   2016   295  999.91</span></span>
+<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a><span class="co">#&gt; 23:     FR   2017   295 1000.01</span></span>
+<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a><span class="co">#&gt; 24:     FR   2018   295 1000.00</span></span>
+<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a><span class="co">#&gt; 25:     FR   2019   295 1000.04</span></span>
+<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a><span class="co">#&gt; 26:     FR   2020   295  999.99</span></span>
+<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a><span class="co">#&gt; 27:     FR   2021   295  999.94</span></span>
+<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a><span class="co">#&gt; 28:     FR   2022   295 1000.01</span></span>
+<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a><span class="co">#&gt; 29:     FR   2023   295 1000.04</span></span>
+<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a><span class="co">#&gt; 30:     FR   2024   295  999.95</span></span>
+<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span>
+<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a></span>
+<span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a><span class="co"># derive merged trees over time, but not across countries:</span></span>
+<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a>item.weights[, <span class="st">&quot;tree2&quot;</span> <span class="sc">:=</span> <span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">by=</span>time, <span class="at">w=</span>values, <span class="at">w.tol=</span><span class="fl">0.1</span>), by<span class="ot">=</span><span class="st">&quot;geo&quot;</span>]</span>
+<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a>item.weights[tree2<span class="sc">==</span><span class="cn">TRUE</span>,</span>
+<span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a>        <span class="fu">list</span>(<span class="st">&quot;n&quot;</span><span class="ot">=</span><span class="fu">uniqueN</span>(coicop),           <span class="co"># same selection over time in a country</span></span>
+<span id="cb7-53"><a href="#cb7-53" tabindex="-1"></a>             <span class="st">&quot;w&quot;</span><span class="ot">=</span><span class="fu">sum</span>(values, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),  <span class="co"># weight sums should equal 1000</span></span>
+<span id="cb7-54"><a href="#cb7-54" tabindex="-1"></a>        by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;time&quot;</span>)]</span>
+<span id="cb7-55"><a href="#cb7-55" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span>
+<span id="cb7-56"><a href="#cb7-56" tabindex="-1"></a><span class="co">#&gt;     &lt;char&gt; &lt;char&gt; &lt;int&gt;   &lt;num&gt;</span></span>
+<span id="cb7-57"><a href="#cb7-57" tabindex="-1"></a><span class="co">#&gt;  1:     EA   2015    93  999.97</span></span>
+<span id="cb7-58"><a href="#cb7-58" tabindex="-1"></a><span class="co">#&gt;  2:     EA   2016    93  999.97</span></span>
+<span id="cb7-59"><a href="#cb7-59" tabindex="-1"></a><span class="co">#&gt;  3:     EA   2017    93 1000.01</span></span>
+<span id="cb7-60"><a href="#cb7-60" tabindex="-1"></a><span class="co">#&gt;  4:     EA   2018    93 1000.00</span></span>
+<span id="cb7-61"><a href="#cb7-61" tabindex="-1"></a><span class="co">#&gt;  5:     EA   2019    93 1000.00</span></span>
+<span id="cb7-62"><a href="#cb7-62" tabindex="-1"></a><span class="co">#&gt;  6:     EA   2020    93  999.99</span></span>
+<span id="cb7-63"><a href="#cb7-63" tabindex="-1"></a><span class="co">#&gt;  7:     EA   2021    93  999.99</span></span>
+<span id="cb7-64"><a href="#cb7-64" tabindex="-1"></a><span class="co">#&gt;  8:     EA   2022    93 1000.02</span></span>
+<span id="cb7-65"><a href="#cb7-65" tabindex="-1"></a><span class="co">#&gt;  9:     EA   2023    93 1000.04</span></span>
+<span id="cb7-66"><a href="#cb7-66" tabindex="-1"></a><span class="co">#&gt; 10:     EA   2024    93 1000.02</span></span>
+<span id="cb7-67"><a href="#cb7-67" tabindex="-1"></a><span class="co">#&gt; 11:     DE   2015   295 1000.00</span></span>
+<span id="cb7-68"><a href="#cb7-68" tabindex="-1"></a><span class="co">#&gt; 12:     DE   2016   295 1000.00</span></span>
+<span id="cb7-69"><a href="#cb7-69" tabindex="-1"></a><span class="co">#&gt; 13:     DE   2017   295 1000.00</span></span>
+<span id="cb7-70"><a href="#cb7-70" tabindex="-1"></a><span class="co">#&gt; 14:     DE   2018   295 1000.00</span></span>
+<span id="cb7-71"><a href="#cb7-71" tabindex="-1"></a><span class="co">#&gt; 15:     DE   2019   295 1000.00</span></span>
+<span id="cb7-72"><a href="#cb7-72" tabindex="-1"></a><span class="co">#&gt; 16:     DE   2020   295 1000.00</span></span>
+<span id="cb7-73"><a href="#cb7-73" tabindex="-1"></a><span class="co">#&gt; 17:     DE   2021   295 1000.00</span></span>
+<span id="cb7-74"><a href="#cb7-74" tabindex="-1"></a><span class="co">#&gt; 18:     DE   2022   295 1000.00</span></span>
+<span id="cb7-75"><a href="#cb7-75" tabindex="-1"></a><span class="co">#&gt; 19:     DE   2023   295 1000.00</span></span>
+<span id="cb7-76"><a href="#cb7-76" tabindex="-1"></a><span class="co">#&gt; 20:     DE   2024   295 1000.00</span></span>
+<span id="cb7-77"><a href="#cb7-77" tabindex="-1"></a><span class="co">#&gt; 21:     FR   2015   284  999.94</span></span>
+<span id="cb7-78"><a href="#cb7-78" tabindex="-1"></a><span class="co">#&gt; 22:     FR   2016   284  999.92</span></span>
+<span id="cb7-79"><a href="#cb7-79" tabindex="-1"></a><span class="co">#&gt; 23:     FR   2017   284 1000.02</span></span>
+<span id="cb7-80"><a href="#cb7-80" tabindex="-1"></a><span class="co">#&gt; 24:     FR   2018   284  999.99</span></span>
+<span id="cb7-81"><a href="#cb7-81" tabindex="-1"></a><span class="co">#&gt; 25:     FR   2019   284 1000.03</span></span>
+<span id="cb7-82"><a href="#cb7-82" tabindex="-1"></a><span class="co">#&gt; 26:     FR   2020   284  999.98</span></span>
+<span id="cb7-83"><a href="#cb7-83" tabindex="-1"></a><span class="co">#&gt; 27:     FR   2021   284  999.94</span></span>
+<span id="cb7-84"><a href="#cb7-84" tabindex="-1"></a><span class="co">#&gt; 28:     FR   2022   284 1000.02</span></span>
+<span id="cb7-85"><a href="#cb7-85" tabindex="-1"></a><span class="co">#&gt; 29:     FR   2023   284 1000.04</span></span>
+<span id="cb7-86"><a href="#cb7-86" tabindex="-1"></a><span class="co">#&gt; 30:     FR   2024   284  999.95</span></span>
+<span id="cb7-87"><a href="#cb7-87" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span>
+<span id="cb7-88"><a href="#cb7-88" tabindex="-1"></a></span>
+<span id="cb7-89"><a href="#cb7-89" tabindex="-1"></a><span class="co"># derive merged trees over countries and time:</span></span>
+<span id="cb7-90"><a href="#cb7-90" tabindex="-1"></a>item.weights[, <span class="st">&quot;tree3&quot;</span> <span class="sc">:=</span> <span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">by=</span><span class="fu">paste</span>(geo,time), <span class="at">w=</span>values, <span class="at">w.tol=</span><span class="fl">0.1</span>)]</span>
+<span id="cb7-91"><a href="#cb7-91" tabindex="-1"></a>item.weights[tree3<span class="sc">==</span><span class="cn">TRUE</span>,</span>
+<span id="cb7-92"><a href="#cb7-92" tabindex="-1"></a>        <span class="fu">list</span>(<span class="st">&quot;n&quot;</span><span class="ot">=</span><span class="fu">uniqueN</span>(coicop),           <span class="co"># same selection over time and across countries</span></span>
+<span id="cb7-93"><a href="#cb7-93" tabindex="-1"></a>             <span class="st">&quot;w&quot;</span><span class="ot">=</span><span class="fu">sum</span>(values, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),  <span class="co"># weight sums should equal 1000</span></span>
+<span id="cb7-94"><a href="#cb7-94" tabindex="-1"></a>        by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;time&quot;</span>)]</span>
+<span id="cb7-95"><a href="#cb7-95" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span>
+<span id="cb7-96"><a href="#cb7-96" tabindex="-1"></a><span class="co">#&gt;     &lt;char&gt; &lt;char&gt; &lt;int&gt;   &lt;num&gt;</span></span>
+<span id="cb7-97"><a href="#cb7-97" tabindex="-1"></a><span class="co">#&gt;  1:     DE   2015    93 1000.00</span></span>
+<span id="cb7-98"><a href="#cb7-98" tabindex="-1"></a><span class="co">#&gt;  2:     DE   2016    93 1000.00</span></span>
+<span id="cb7-99"><a href="#cb7-99" tabindex="-1"></a><span class="co">#&gt;  3:     DE   2017    93 1000.00</span></span>
+<span id="cb7-100"><a href="#cb7-100" tabindex="-1"></a><span class="co">#&gt;  4:     DE   2018    93 1000.00</span></span>
+<span id="cb7-101"><a href="#cb7-101" tabindex="-1"></a><span class="co">#&gt;  5:     DE   2019    93 1000.00</span></span>
+<span id="cb7-102"><a href="#cb7-102" tabindex="-1"></a><span class="co">#&gt;  6:     DE   2020    93 1000.00</span></span>
+<span id="cb7-103"><a href="#cb7-103" tabindex="-1"></a><span class="co">#&gt;  7:     DE   2021    93 1000.00</span></span>
+<span id="cb7-104"><a href="#cb7-104" tabindex="-1"></a><span class="co">#&gt;  8:     DE   2022    93 1000.00</span></span>
+<span id="cb7-105"><a href="#cb7-105" tabindex="-1"></a><span class="co">#&gt;  9:     DE   2023    93 1000.00</span></span>
+<span id="cb7-106"><a href="#cb7-106" tabindex="-1"></a><span class="co">#&gt; 10:     DE   2024    93 1000.00</span></span>
+<span id="cb7-107"><a href="#cb7-107" tabindex="-1"></a><span class="co">#&gt; 11:     EA   2015    93  999.97</span></span>
+<span id="cb7-108"><a href="#cb7-108" tabindex="-1"></a><span class="co">#&gt; 12:     EA   2016    93  999.97</span></span>
+<span id="cb7-109"><a href="#cb7-109" tabindex="-1"></a><span class="co">#&gt; 13:     EA   2017    93 1000.01</span></span>
+<span id="cb7-110"><a href="#cb7-110" tabindex="-1"></a><span class="co">#&gt; 14:     EA   2018    93 1000.00</span></span>
+<span id="cb7-111"><a href="#cb7-111" tabindex="-1"></a><span class="co">#&gt; 15:     EA   2019    93 1000.00</span></span>
+<span id="cb7-112"><a href="#cb7-112" tabindex="-1"></a><span class="co">#&gt; 16:     EA   2020    93  999.99</span></span>
+<span id="cb7-113"><a href="#cb7-113" tabindex="-1"></a><span class="co">#&gt; 17:     EA   2021    93  999.99</span></span>
+<span id="cb7-114"><a href="#cb7-114" tabindex="-1"></a><span class="co">#&gt; 18:     EA   2022    93 1000.02</span></span>
+<span id="cb7-115"><a href="#cb7-115" tabindex="-1"></a><span class="co">#&gt; 19:     EA   2023    93 1000.04</span></span>
+<span id="cb7-116"><a href="#cb7-116" tabindex="-1"></a><span class="co">#&gt; 20:     EA   2024    93 1000.02</span></span>
+<span id="cb7-117"><a href="#cb7-117" tabindex="-1"></a><span class="co">#&gt; 21:     FR   2015    93  999.99</span></span>
+<span id="cb7-118"><a href="#cb7-118" tabindex="-1"></a><span class="co">#&gt; 22:     FR   2016    93  999.99</span></span>
+<span id="cb7-119"><a href="#cb7-119" tabindex="-1"></a><span class="co">#&gt; 23:     FR   2017    93 1000.04</span></span>
+<span id="cb7-120"><a href="#cb7-120" tabindex="-1"></a><span class="co">#&gt; 24:     FR   2018    93 1000.00</span></span>
+<span id="cb7-121"><a href="#cb7-121" tabindex="-1"></a><span class="co">#&gt; 25:     FR   2019    93 1000.00</span></span>
+<span id="cb7-122"><a href="#cb7-122" tabindex="-1"></a><span class="co">#&gt; 26:     FR   2020    93  999.99</span></span>
+<span id="cb7-123"><a href="#cb7-123" tabindex="-1"></a><span class="co">#&gt; 27:     FR   2021    93 1000.02</span></span>
+<span id="cb7-124"><a href="#cb7-124" tabindex="-1"></a><span class="co">#&gt; 28:     FR   2022    93 1000.03</span></span>
+<span id="cb7-125"><a href="#cb7-125" tabindex="-1"></a><span class="co">#&gt; 29:     FR   2023    93  999.98</span></span>
+<span id="cb7-126"><a href="#cb7-126" tabindex="-1"></a><span class="co">#&gt; 30:     FR   2024    93  999.96</span></span>
+<span id="cb7-127"><a href="#cb7-127" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span></code></pre></div>
 <p>All three COICOP trees in the example above can be used to aggregate
 the all-items HICP in a single aggregation step as the item weights add
 up to 1000, respectively. While the selection of COICOP codes varies
@@ -752,7 +755,7 @@ The HICP indices currently refer to the <em>index reference period</em>
 2015=100. Monthly and annual change rates can be derived from the price
 indices. The contributions of the price changes of individual items to
 the annual rate of change can be computed by the “Ribe contributions”.
-More details can be found in <span class="citation">Eurostat (2018,
+More details can be found in <span class="citation">Eurostat (2024,
 chap. 8)</span>.</p>
 <div id="index-aggregation" class="section level2">
 <h2>Index aggregation</h2>
@@ -888,10 +891,10 @@ European Union. 2016. <span>“<span class="nocase">Regulation (EU)
 house price index</span>.”</span> <em>Official Journal of the European
 Union</em> 135: 12–38.
 </div>
-<div id="ref-Eurostat2018" class="csl-entry">
-Eurostat. 2018. <em><span class="nocase">Harmonised Index of Consumer
+<div id="ref-Eurostat2024" class="csl-entry">
+Eurostat. 2024. <em><span class="nocase">Harmonised Index of Consumer
 Prices (HICP) methodological manual</span></em>. Luxembourg:
-Publications Office of the European Union. <a href="https://doi.org/10.2785/85564">https://doi.org/10.2785/85564</a>.
+Publications Office of the European Union. <a href="https://doi.org/10.2785/055028">https://doi.org/10.2785/055028</a>.
 </div>
 </div>
 </div>
