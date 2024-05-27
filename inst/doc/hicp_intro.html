@@ -12,7 +12,7 @@
 
 <meta name="author" content="Sebastian Weinand" />
 
-<meta name="date" content="2024-02-28" />
+<meta name="date" content="2024-05-27" />
 
 <title>Introduction to the hicp-package</title>
 
@@ -363,7 +363,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Introduction to the
 <code>hicp</code>-package</h1>
 <h4 class="author">Sebastian Weinand</h4>
-<h4 class="date">28 February 2024</h4>
+<h4 class="date">27 May 2024</h4>
 
 
 <div id="TOC">
@@ -437,10 +437,10 @@ update).</p>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 5:                                             HICP - country weights</span></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;             code lastUpdate  values</span></span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;           &lt;char&gt;     &lt;char&gt;   &lt;num&gt;</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 1: prc_hicp_cind 2024.02.22 2068890</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 2: prc_hicp_cann 2024.02.22 1891436</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 3: prc_hicp_cmon 2024.02.22 4107592</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 4:  prc_hicp_apc 2024.02.22  717429</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 1: prc_hicp_cind 2024.05.17 2109951</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 2: prc_hicp_cann 2024.05.17 1932404</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 3: prc_hicp_cmon 2024.05.17 4189708</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 4:  prc_hicp_apc 2024.05.17  717429</span></span>
 <span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 5:  prc_hicp_cow 2024.02.22    2921</span></span></code></pre></div>
 <p>The output above shows the first five HICP datasets. As can be seen,
 a short description of each dataset and some metadata are provided. The
@@ -807,7 +807,7 @@ all decimals).</p>
 <span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a></span>
 <span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a><span class="co"># compute all-items HICP in one aggregation step:</span></span>
 <span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a>hicp.own <span class="ot">&lt;-</span> hicp.data[tree<span class="sc">==</span><span class="cn">TRUE</span>, </span>
-<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a>                      <span class="fu">list</span>(<span class="st">&quot;laspey&quot;</span><span class="ot">=</span><span class="fu">laspey</span>(<span class="at">x=</span>dec_ratio, <span class="at">w0=</span>weight)), </span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a>                      <span class="fu">list</span>(<span class="st">&quot;laspey&quot;</span><span class="ot">=</span><span class="fu">laspeyres</span>(<span class="at">x=</span>dec_ratio, <span class="at">w0=</span>weight)), </span>
 <span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a>                      by<span class="ot">=</span><span class="st">&quot;time&quot;</span>]</span>
 <span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a><span class="fu">setorderv</span>(<span class="at">x=</span>hicp.own, <span class="at">cols=</span><span class="st">&quot;time&quot;</span>)</span>
 <span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a>hicp.own[, <span class="st">&quot;chain_laspey&quot;</span> <span class="sc">:=</span> <span class="fu">chain</span>(<span class="at">x=</span>laspey, <span class="at">t=</span>time, <span class="at">by=</span><span class="dv">12</span>)]</span>
@@ -834,10 +834,10 @@ well, which allows aggregation using any weighted or unweighted index
 formula.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># compute all-items HICP stepwise through all higher-levels:</span></span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>hicp.own.all <span class="ot">&lt;-</span> hicp.data[<span class="fu">is.coicop</span>(coicop), </span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>                          <span class="fu">aggregate</span>(<span class="at">x=</span>dec_ratio, <span class="at">w0=</span>weight, <span class="at">grp=</span>coicop, <span class="at">index=</span>laspey),</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>                          <span class="fu">aggregate</span>(<span class="at">x=</span>dec_ratio, <span class="at">w0=</span>weight, <span class="at">grp=</span>coicop, <span class="at">index=</span>laspeyres),</span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>                          by<span class="ot">=</span><span class="st">&quot;time&quot;</span>]</span>
 <span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="fu">setorderv</span>(<span class="at">x=</span>hicp.own.all, <span class="at">cols=</span><span class="st">&quot;time&quot;</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>hicp.own.all[, <span class="st">&quot;chain_laspey&quot;</span> <span class="sc">:=</span> <span class="fu">chain</span>(<span class="at">x=</span>laspey, <span class="at">t=</span>time, <span class="at">by=</span><span class="dv">12</span>), by<span class="ot">=</span><span class="st">&quot;grp&quot;</span>]</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>hicp.own.all[, <span class="st">&quot;chain_laspey&quot;</span> <span class="sc">:=</span> <span class="fu">chain</span>(<span class="at">x=</span>laspeyres, <span class="at">t=</span>time, <span class="at">by=</span><span class="dv">12</span>), by<span class="ot">=</span><span class="st">&quot;grp&quot;</span>]</span>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>hicp.own.all[, <span class="st">&quot;chain_laspey_15&quot;</span> <span class="sc">:=</span> <span class="fu">rebase</span>(<span class="at">x=</span>chain_laspey, <span class="at">t=</span>time, <span class="at">t.ref=</span><span class="st">&quot;2015&quot;</span>), by<span class="ot">=</span><span class="st">&quot;grp&quot;</span>]</span>
 <span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a></span>
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co"># compare all-items HICP from direct and step-wise aggregation:</span></span>
