@@ -11,7 +11,13 @@ knitr::opts_chunk$set(
 )
 
 ## ----setup, message=FALSE-----------------------------------------------------
-library(hicp) # load package
+# load package:
+library(hicp)
+
+# set global options:
+options(hicp.coicop.version="ecoicop-hicp") # the coicop version to be used
+options(hicp.unbundle=TRUE) # treatment of coicop bundle codes like 08X
+options(hicp.all.items.code="00") # internal code for the all-items index
 
 ## ----warning=FALSE------------------------------------------------------------
 dtd <- hicp.datasets()
@@ -47,11 +53,16 @@ is.bundle(id=ids)
 # unbundle any bundle codes into their components:
 unbundle(id=ids)
 
-# check if valid COICOP code including bundle codes:
-is.coicop(id=ids, unbundle=TRUE)
+# check if valid ECOICOP code including bundle codes:
+is.coicop(id=ids, settings=list(unbundle=TRUE))
 
-# check if valid COICOP code excluding bundle codes:
-is.coicop(id=ids, unbundle=FALSE)
+# check if valid ECOICOP code excluding bundle codes:
+is.coicop(id=ids, settings=list(unbundle=FALSE))
+
+# games of chance have a valid ECOICOP code:
+is.coicop("0943", settings=list(coicop.version="ecoicop"))
+# but not in the ECOICOP-HICP:
+is.coicop("0943", settings=list(coicop.version="ecoicop-hicp"))
 
 ## ----warning=FALSE------------------------------------------------------------
 # example codes:
@@ -75,22 +86,22 @@ item.weights <- item.weights[grepl("^CP", coicop),]
 item.weights[, "coicop":=gsub(pattern="^CP", replacement="", x=coicop)]
 
 # derive separate trees for each time period and country:
-item.weights[, "tree1" := tree(id=coicop, w=values, w.tol=0.1), by=c("geo","time")]
-item.weights[tree1==TRUE,
+item.weights[, "t1" := tree(id=coicop, w=values, settings=list(w.tol=0.1)), by=c("geo","time")]
+item.weights[t1==TRUE,
         list("n"=uniqueN(coicop),           # varying coicops over time and space
              "w"=sum(values, na.rm=TRUE)),  # weight sums should equal 1000
         by=c("geo","time")]
 
 # derive merged trees over time, but not across countries:
-item.weights[, "tree2" := tree(id=coicop, by=time, w=values, w.tol=0.1), by="geo"]
-item.weights[tree2==TRUE,
+item.weights[, "t2" := tree(id=coicop, by=time, w=values, settings=list(w.tol=0.1)), by="geo"]
+item.weights[t2==TRUE,
         list("n"=uniqueN(coicop),           # same selection over time in a country
              "w"=sum(values, na.rm=TRUE)),  # weight sums should equal 1000
         by=c("geo","time")]
 
 # derive merged trees over countries and time:
-item.weights[, "tree3" := tree(id=coicop, by=paste(geo,time), w=values, w.tol=0.1)]
-item.weights[tree3==TRUE,
+item.weights[, "t3" := tree(id=coicop, by=paste(geo,time), w=values, settings=list(w.tol=0.1))]
+item.weights[t3==TRUE,
         list("n"=uniqueN(coicop),           # same selection over time and across countries
              "w"=sum(values, na.rm=TRUE)),  # weight sums should equal 1000
         by=c("geo","time")]
@@ -117,7 +128,7 @@ inw[, "time":=as.integer(time)]
 setnames(x=inw, old=c("time","values"), new=c("year","weight"))
 
 # derive coicop tree:
-inw[ , "tree":=tree(id=coicop, w=weight, w.tol=0.1), by=c("geo","year")]
+inw[ , "tree":=tree(id=coicop, w=weight, settings=list(w.tol=0.1)), by=c("geo","year")]
 
 # merge price indices and item weights:
 hicp.data <- merge(x=prc, y=inw, by=c("geo","coicop","year"), all.x=TRUE)

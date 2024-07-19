@@ -12,7 +12,7 @@
 
 <meta name="author" content="Sebastian Weinand" />
 
-<meta name="date" content="2024-06-02" />
+<meta name="date" content="2024-07-19" />
 
 <title>Introduction to the hicp-package</title>
 
@@ -363,7 +363,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Introduction to the
 <code>hicp</code>-package</h1>
 <h4 class="author">Sebastian Weinand</h4>
-<h4 class="date">02 June 2024</h4>
+<h4 class="date">19 July 2024</h4>
 
 
 <div id="TOC">
@@ -399,14 +399,20 @@ contributions</a></li>
 <p><br /><br /> The Harmonised Index of Consumer Prices (HICP) is the key
 economic figure to measure inflation in the euro area. The methodology
 underlying the HICP is documented in the HICP Methodological Manual
-<span class="citation">(Eurostat 2024)</span>. Based on this manual, the
-<code>hicp</code>-package provides functions for data users to work with
-publicly available HICP price indices and weights (<em>upper-level
-aggregation</em>). The following vignette highlights the main package
-features. It contains three sections on data access, the Classification
-of Consumption by Individual Purpose (COICOP) underlying the HICP, and
-index aggregation.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(hicp) <span class="co"># load package</span></span></code></pre></div>
+<span class="citation">(European Commission 2024)</span>. Based on this
+manual, the <code>hicp</code>-package provides functions for data users
+to work with publicly available HICP price indices and weights
+(<em>upper-level aggregation</em>). The following vignette highlights
+the main package features. It contains three sections on data access,
+the Classification of Consumption by Individual Purpose (COICOP)
+underlying the HICP, and index aggregation.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># load package:</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(hicp)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># set global options:</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">options</span>(<span class="at">hicp.coicop.version=</span><span class="st">&quot;ecoicop-hicp&quot;</span>) <span class="co"># the coicop version to be used</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">options</span>(<span class="at">hicp.unbundle=</span><span class="cn">TRUE</span>) <span class="co"># treatment of coicop bundle codes like 08X</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">options</span>(<span class="at">hicp.all.items.code=</span><span class="st">&quot;00&quot;</span>) <span class="co"># internal code for the all-items index</span></span></code></pre></div>
 <div id="hicp-data" class="section level1">
 <h1>HICP data</h1>
 <p>The <code>hicp</code>-package offers easy access to HICP data from
@@ -437,10 +443,10 @@ update).</p>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 5:                                             HICP - country weights</span></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;             code lastUpdate  values</span></span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;           &lt;char&gt;     &lt;char&gt;   &lt;num&gt;</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 1: prc_hicp_cind 2024.05.17 2109951</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 2: prc_hicp_cann 2024.05.17 1932404</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 3: prc_hicp_cmon 2024.05.17 4189708</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 4:  prc_hicp_apc 2024.05.17  717429</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 1: prc_hicp_cind 2024.07.17 2111411</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 2: prc_hicp_cann 2024.07.17 1934261</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 3: prc_hicp_cmon 2024.07.17 4193574</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 4:  prc_hicp_apc 2024.07.17  713367</span></span>
 <span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 5:  prc_hicp_cow 2024.02.22    2921</span></span></code></pre></div>
 <p>The output above shows the first five HICP datasets. As can be seen,
 a short description of each dataset and some metadata are provided. The
@@ -515,26 +521,30 @@ would simplify to <code>hicp.dataimport(id=&quot;prc_hicp_inw&quot;)</code>.</p>
 </div>
 <div id="hicp-and-coicop" class="section level1">
 <h1>HICP and COICOP</h1>
-<p>HICP item weights and price indices are classified according to
-COICOP. The all-items HICP includes twelve item divisions, which are
-further broken down by consumption purpose. At the lowest level of
-subclasses (5-digit codes), there is the finest differentiation of items
-for which weights are available, e.g., <em>rice</em> (01111) or
-<em>bread</em> (01113). Both rice and bread belong to the same class,
-<em>bread and cereals (0111)</em>, and, at higher levels, to the same
-group <em>food (011)</em> and division <em>food and non-alcoholic
-beverages (01)</em>. Hence, COICOP and thus also the HICP follows a
-pre-defined hierarchical tree, where the item weights of the all-items
-HICP add up to 1000. This section shows how to work with the COICOP
-codes to derive for example the lowest level of items that form the
-all-items HICP.</p>
+<p>HICP item weights and price indices are classified according to the
+European COICOP (ECOICOP-HICP). This COICOP version is used by default
+(<code>options(hicp.coicop.version=&quot;ecoicop-hicp&quot;)</code>) but others
+are available in the package as well. The all-items HICP includes twelve
+item divisions, which are further broken down by consumption purpose. At
+the lowest level of subclasses (5-digit codes), there is the finest
+differentiation of items for which weights are available, e.g.,
+<em>rice</em> (01111) or <em>bread</em> (01113). Both rice and bread
+belong to the same class, <em>bread and cereals (0111)</em>, and, at
+higher levels, to the same group <em>food (011)</em> and division
+<em>food and non-alcoholic beverages (01)</em>. Hence, ECOICOP and thus
+also the HICP follows a pre-defined hierarchical tree, where the item
+weights of the all-items HICP add up to 1000. This section shows how to
+work with the COICOP codes to derive for example the lowest level of
+items that form the all-items HICP.</p>
 <div id="coicop-codes-bundles-and-relatives" class="section level2">
 <h2>COICOP codes, bundles, and relatives</h2>
-<p><strong>COICOP codes and bundles.</strong> The <a href="https://showvoc.op.europa.eu/#/datasets/ESTAT_European_Classification_of_Individual_Consumption_according_to_Purpose_%28ECOICOP%29/data">COICOP
-codes underlying the HICP</a> consist of numbers. The code of the
-all-items HICP is <code>00</code>, while the codes of the twelve
+<p><strong>COICOP codes and bundles.</strong> The COICOP codes
+underlying the HICP (<a href="https://op.europa.eu/de/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/ecoicop-hicp">ECOICOP</a>)
+consist of numbers. The code <code>00</code> is used in this package for
+the all-items HICP although it is no official COICOP code (see
+<code>options(hicp.all.items.code=&quot;00&quot;)</code>). The codes of the twelve
 divisions below start with <code>01, 02,..., 12</code>. At the lowest
-level of subclasses, the codes consist of 5 digits. Using function
+level of subclasses, the codes consist of 5 digits. Using the function
 <code>is.coicop()</code>, it can be easily checked if a code is a valid
 COICOP code or not. This includes bundle codes like
 <code>082_083</code>, which violate the standard COICOP code pattern,
@@ -553,13 +563,20 @@ using <code>is.bundle()</code> and be unbundled using function
 <span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt;     00   CP00     13    08X    08X </span></span>
 <span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt;   &quot;00&quot; &quot;CP00&quot;   &quot;13&quot;  &quot;082&quot;  &quot;083&quot;</span></span>
 <span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co"># check if valid COICOP code including bundle codes:</span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="fu">is.coicop</span>(<span class="at">id=</span>ids, <span class="at">unbundle=</span><span class="cn">TRUE</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; [1]  TRUE FALSE FALSE  TRUE</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co"># check if valid ECOICOP code including bundle codes:</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="fu">is.coicop</span>(<span class="at">id=</span>ids, <span class="at">settings=</span><span class="fu">list</span>(<span class="at">unbundle=</span><span class="cn">TRUE</span>))</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; [1] FALSE FALSE FALSE  TRUE</span></span>
 <span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co"># check if valid COICOP code excluding bundle codes:</span></span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="fu">is.coicop</span>(<span class="at">id=</span>ids, <span class="at">unbundle=</span><span class="cn">FALSE</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; [1]  TRUE FALSE FALSE FALSE</span></span></code></pre></div>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co"># check if valid ECOICOP code excluding bundle codes:</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="fu">is.coicop</span>(<span class="at">id=</span>ids, <span class="at">settings=</span><span class="fu">list</span>(<span class="at">unbundle=</span><span class="cn">FALSE</span>))</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; [1] FALSE FALSE FALSE FALSE</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co"># games of chance have a valid ECOICOP code:</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="fu">is.coicop</span>(<span class="st">&quot;0943&quot;</span>, <span class="at">settings=</span><span class="fu">list</span>(<span class="at">coicop.version=</span><span class="st">&quot;ecoicop&quot;</span>))</span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co"># but not in the ECOICOP-HICP:</span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="fu">is.coicop</span>(<span class="st">&quot;0943&quot;</span>, <span class="at">settings=</span><span class="fu">list</span>(<span class="at">coicop.version=</span><span class="st">&quot;ecoicop-hicp&quot;</span>))</span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
 <p><strong>COICOP relatives.</strong> COICOP codes available in the data
 downloaded from Eurostat’s database should be generally valid (except
 for the prefix “CP”). More relevant is thus the detection of children
@@ -620,8 +637,8 @@ codes is also denoted as the <em>COICOP tree</em> in this package.</p>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>item.weights[, <span class="st">&quot;coicop&quot;</span><span class="sc">:=</span><span class="fu">gsub</span>(<span class="at">pattern=</span><span class="st">&quot;^CP&quot;</span>, <span class="at">replacement=</span><span class="st">&quot;&quot;</span>, <span class="at">x=</span>coicop)]</span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a></span>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co"># derive separate trees for each time period and country:</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>item.weights[, <span class="st">&quot;tree1&quot;</span> <span class="sc">:=</span> <span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">w=</span>values, <span class="at">w.tol=</span><span class="fl">0.1</span>), by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;time&quot;</span>)]</span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>item.weights[tree1<span class="sc">==</span><span class="cn">TRUE</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>item.weights[, <span class="st">&quot;t1&quot;</span> <span class="sc">:=</span> <span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">w=</span>values, <span class="at">settings=</span><span class="fu">list</span>(<span class="at">w.tol=</span><span class="fl">0.1</span>)), by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;time&quot;</span>)]</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>item.weights[t1<span class="sc">==</span><span class="cn">TRUE</span>,</span>
 <span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>        <span class="fu">list</span>(<span class="st">&quot;n&quot;</span><span class="ot">=</span><span class="fu">uniqueN</span>(coicop),           <span class="co"># varying coicops over time and space</span></span>
 <span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>             <span class="st">&quot;w&quot;</span><span class="ot">=</span><span class="fu">sum</span>(values, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),  <span class="co"># weight sums should equal 1000</span></span>
 <span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>        by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;time&quot;</span>)]</span>
@@ -660,8 +677,8 @@ codes is also denoted as the <em>COICOP tree</em> in this package.</p>
 <span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span>
 <span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a></span>
 <span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a><span class="co"># derive merged trees over time, but not across countries:</span></span>
-<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a>item.weights[, <span class="st">&quot;tree2&quot;</span> <span class="sc">:=</span> <span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">by=</span>time, <span class="at">w=</span>values, <span class="at">w.tol=</span><span class="fl">0.1</span>), by<span class="ot">=</span><span class="st">&quot;geo&quot;</span>]</span>
-<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a>item.weights[tree2<span class="sc">==</span><span class="cn">TRUE</span>,</span>
+<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a>item.weights[, <span class="st">&quot;t2&quot;</span> <span class="sc">:=</span> <span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">by=</span>time, <span class="at">w=</span>values, <span class="at">settings=</span><span class="fu">list</span>(<span class="at">w.tol=</span><span class="fl">0.1</span>)), by<span class="ot">=</span><span class="st">&quot;geo&quot;</span>]</span>
+<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a>item.weights[t2<span class="sc">==</span><span class="cn">TRUE</span>,</span>
 <span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a>        <span class="fu">list</span>(<span class="st">&quot;n&quot;</span><span class="ot">=</span><span class="fu">uniqueN</span>(coicop),           <span class="co"># same selection over time in a country</span></span>
 <span id="cb7-53"><a href="#cb7-53" tabindex="-1"></a>             <span class="st">&quot;w&quot;</span><span class="ot">=</span><span class="fu">sum</span>(values, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),  <span class="co"># weight sums should equal 1000</span></span>
 <span id="cb7-54"><a href="#cb7-54" tabindex="-1"></a>        by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;time&quot;</span>)]</span>
@@ -700,8 +717,8 @@ codes is also denoted as the <em>COICOP tree</em> in this package.</p>
 <span id="cb7-87"><a href="#cb7-87" tabindex="-1"></a><span class="co">#&gt;        geo   time     n       w</span></span>
 <span id="cb7-88"><a href="#cb7-88" tabindex="-1"></a></span>
 <span id="cb7-89"><a href="#cb7-89" tabindex="-1"></a><span class="co"># derive merged trees over countries and time:</span></span>
-<span id="cb7-90"><a href="#cb7-90" tabindex="-1"></a>item.weights[, <span class="st">&quot;tree3&quot;</span> <span class="sc">:=</span> <span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">by=</span><span class="fu">paste</span>(geo,time), <span class="at">w=</span>values, <span class="at">w.tol=</span><span class="fl">0.1</span>)]</span>
-<span id="cb7-91"><a href="#cb7-91" tabindex="-1"></a>item.weights[tree3<span class="sc">==</span><span class="cn">TRUE</span>,</span>
+<span id="cb7-90"><a href="#cb7-90" tabindex="-1"></a>item.weights[, <span class="st">&quot;t3&quot;</span> <span class="sc">:=</span> <span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">by=</span><span class="fu">paste</span>(geo,time), <span class="at">w=</span>values, <span class="at">settings=</span><span class="fu">list</span>(<span class="at">w.tol=</span><span class="fl">0.1</span>))]</span>
+<span id="cb7-91"><a href="#cb7-91" tabindex="-1"></a>item.weights[t3<span class="sc">==</span><span class="cn">TRUE</span>,</span>
 <span id="cb7-92"><a href="#cb7-92" tabindex="-1"></a>        <span class="fu">list</span>(<span class="st">&quot;n&quot;</span><span class="ot">=</span><span class="fu">uniqueN</span>(coicop),           <span class="co"># same selection over time and across countries</span></span>
 <span id="cb7-93"><a href="#cb7-93" tabindex="-1"></a>             <span class="st">&quot;w&quot;</span><span class="ot">=</span><span class="fu">sum</span>(values, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),  <span class="co"># weight sums should equal 1000</span></span>
 <span id="cb7-94"><a href="#cb7-94" tabindex="-1"></a>        by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;time&quot;</span>)]</span>
@@ -741,8 +758,8 @@ codes is also denoted as the <em>COICOP tree</em> in this package.</p>
 <p>All three COICOP trees in the example above can be used to aggregate
 the all-items HICP in a single aggregation step as the item weights add
 up to 1000, respectively. While the selection of COICOP codes varies
-over time and across countries for <code>tree1</code>, it is the same
-over time and across countries for <code>tree3</code>.</p>
+over time and across countries for <code>t1</code>, it is the same over
+time and across countries for <code>t3</code>.</p>
 </div>
 </div>
 <div id="index-aggregation-rates-of-change-and-contributions" class="section level1">
@@ -755,8 +772,8 @@ The HICP indices currently refer to the <em>index reference period</em>
 2015=100. Monthly and annual change rates can be derived from the price
 indices. The contributions of the price changes of individual items to
 the annual rate of change can be computed by the “Ribe contributions”.
-More details can be found in <span class="citation">Eurostat (2024,
-chap. 8)</span>.</p>
+More details can be found in <span class="citation">European Commission
+(2024, chap. 8)</span>.</p>
 <div id="index-aggregation" class="section level2">
 <h2>Index aggregation</h2>
 <p>The all-items index is a weighted average of the items’ subindices.
@@ -771,7 +788,7 @@ one step and also stepwise through all higher-level indices. For that
 purpose, the monthly price indices and item weights are first downloaded
 from Eurostat’s database. The two datasets are then merged. Second, the
 price indices are unchained using the function <code>unchain()</code>.
-Based on the derived COICOP tree, the unchained price indices are
+Based on the derived ECOICOP tree, the unchained price indices are
 aggregated in one step using the Laspeyres-type index,
 <code>chain()</code>ed, and finally <code>rebase()</code>d to the index
 reference period 2015. A comparison to the published all-items index
@@ -799,7 +816,7 @@ all decimals).</p>
 <span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="fu">setnames</span>(<span class="at">x=</span>inw, <span class="at">old=</span><span class="fu">c</span>(<span class="st">&quot;time&quot;</span>,<span class="st">&quot;values&quot;</span>), <span class="at">new=</span><span class="fu">c</span>(<span class="st">&quot;year&quot;</span>,<span class="st">&quot;weight&quot;</span>))</span>
 <span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a></span>
 <span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co"># derive coicop tree:</span></span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>inw[ , <span class="st">&quot;tree&quot;</span><span class="sc">:=</span><span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">w=</span>weight, <span class="at">w.tol=</span><span class="fl">0.1</span>), by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;year&quot;</span>)]</span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>inw[ , <span class="st">&quot;tree&quot;</span><span class="sc">:=</span><span class="fu">tree</span>(<span class="at">id=</span>coicop, <span class="at">w=</span>weight, <span class="at">settings=</span><span class="fu">list</span>(<span class="at">w.tol=</span><span class="fl">0.1</span>)), by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;year&quot;</span>)]</span>
 <span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a></span>
 <span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co"># merge price indices and item weights:</span></span>
 <span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>hicp.data <span class="ot">&lt;-</span> <span class="fu">merge</span>(<span class="at">x=</span>prc, <span class="at">y=</span>inw, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;coicop&quot;</span>,<span class="st">&quot;year&quot;</span>), <span class="at">all.x=</span><span class="cn">TRUE</span>)</span>
@@ -823,7 +840,7 @@ all decimals).</p>
 <span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Time&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Difference (in index points)&quot;</span>)</span>
 <span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Difference between published index and own calculations&quot;</span>)</span>
 <span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 <p>Similarly, the (unchained) price indices are also
 <code>aggregate()</code>d stepwise, which produces in addition to the
 all-items index all higher-level subindices. A comparison to the
@@ -847,7 +864,7 @@ formula.</p>
 <span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a></span>
 <span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co"># no differences -&gt; consistent in aggregation:</span></span>
 <span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="fu">nrow</span>(agg.comp[<span class="fu">abs</span>(index_stpwse<span class="sc">-</span>index_direct)<span class="sc">&gt;</span><span class="fl">1e-4</span>,])</span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt; [1] 108</span></span></code></pre></div>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span></code></pre></div>
 </div>
 <div id="rates-of-change-and-contributions" class="section level2">
 <h2>Rates of change and contributions</h2>
@@ -885,16 +902,17 @@ function <code>contrib()</code>.</p>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Eurostat2024" class="csl-entry">
+European Commission, Eurostat. 2024. <em><span class="nocase">Harmonised
+Index of Consumer Prices (HICP) - Methodological Manual - 2024
+edition</span></em>. Luxembourg: Publications Office of the European
+Union. <a href="https://doi.org/10.2785/055028">https://doi.org/10.2785/055028</a>.
+</div>
 <div id="ref-EU2016" class="csl-entry">
 European Union. 2016. <span>“<span class="nocase">Regulation (EU)
 2016/792 of 11 May 2016 on harmonised indices of consumer prices and the
 house price index</span>.”</span> <em>Official Journal of the European
 Union</em> 135: 12–38.
-</div>
-<div id="ref-Eurostat2024" class="csl-entry">
-Eurostat. 2024. <em><span class="nocase">Harmonised Index of Consumer
-Prices (HICP) methodological manual</span></em>. Luxembourg:
-Publications Office of the European Union. <a href="https://doi.org/10.2785/055028">https://doi.org/10.2785/055028</a>.
 </div>
 </div>
 </div>

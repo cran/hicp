@@ -15,7 +15,7 @@
 \author{Sebastian Weinand}
 
 \description{
-Lower-level price relatives or price indices can be aggregated into higher-level indices in a single step using one of the bilateral index number methods listed in Section 'Usage'. Function \code{aggregate()} uses these bilateral indices (or others defined by the user) for step-wise aggregation of lower-level subindices into the overall index following the COICOP hierarchy.}
+Lower-level price relatives or price indices can be aggregated into higher-level indices in a single step using one of the bilateral index number methods listed below. Function \code{aggregate()} uses these bilateral indices (or others defined by the user) for step-wise aggregation of lower-level subindices into the overall index following the COICOP hierarchy.}
 
 \usage{
 # bilateral price indices:
@@ -33,22 +33,25 @@ aggregate(x, w0, wt, grp, index=laspeyres, add=list(), settings=list())
 }
 
 \arguments{
-  \item{x}{numeric vector of price relatives obtained by \code{unchain()}ing some HICP index series.}
+  \item{x}{numeric vector of price relatives obtained by unchaining some HICP index series.}
   \item{w0, wt}{numeric vector of weights in the base period \code{w0} (e.g., for the Laspeyres index) or current period \code{wt} (e.g., for the Paasche index), respectively.}
-  \item{grp}{grouping variable to be used. These should be valid COICOP codes or other hierarchical codes.}
+  \item{grp}{grouping variable to be used. These must be valid COICOP codes according to \code{is.coicop()}.}
   \item{index}{a function or named list of functions specifying the index formula used for aggregation. Each function must have arguments \code{x}, \code{w0} and \code{wt}, even if \code{w0} and/or \code{wt} are not used (this can be indicated by setting this argument to \code{NULL}). Each function must return a scalar. The default is \code{index=laspeyres} since the HICP is calculated as a Laspeyres-type index.}
   \item{add}{a named list of user-defined aggregates to be calculated. Each list element is a vector of ids that can be found in \code{grp}. See \code{settings$add.exact} for further specification of this argument.}
   \item{settings}{A list of control settings to be used. The following settings are supported:
   \itemize{
     \item \code{keep.lowest} : logical indicating if the lowest-level indices that form the base of all aggregation steps should be kept in the function output. The default is \code{TRUE}.
     \item \code{add.exact} : logical indicating if the ids in \code{add} must \bold{all} be present in \code{grp} for aggregation or not. If \code{FALSE}, aggregation is carried out using the available ids in \code{add}. If \code{TRUE} and some ids are missing in \code{add}, \code{NA} is returned. The default is \code{TRUE}.
+    \item \code{coicop.version} : the COICOP version to be used when checking for valid COICOP codes. See \code{\link{coicop}} for the allowed values.  The default is \code{getOption("hicp.coicop.version")}.
+    \item \code{unbundle} : logical indicating if COICOP bundles (e.g. 08X, 0531_2) as defined in \code{\link{coicop.bundles}} should be taken into account or not. The default is \code{getOption("hicp.unbundle")}.
+    \item \code{all.items.code} : character specifying the code internally used for the all-items index. The default is taken from \code{getOption("hicp.all.items.code")}.
   }}
 }
 
 \details{
 The price indices currently available use price relatives \code{x}. The Dutot index is therefore not implemented.
 
-The functions \code{jevons()}, \code{carli()}, and \code{harmonic()} do not make use of any weights in the calculations. However, they are implemented in a way such that the weights \code{w0} are considered, that is, elements in \code{x} where the weight \code{w0} is \code{NA} are excluded from the calculations. This mimics the behaviour of the weighted index functions like \code{laspeyres()} and can be useful in situations where indices are present but the weight is missing. If, for example, subindices are newly introduced, the index in December is usually set to 100 while the weight of this subindex is not available. The subindex's value in December can thus be excluded by using the weights \code{w0} also in the unweighted price indices.
+The functions \code{jevons()}, \code{carli()}, and \code{harmonic()} do not make use of any weights in the calculations. However, they are implemented in a way such that the weights \code{w0} are considered, that is, elements in \code{x} where the weight \code{w0} is \code{NA} are excluded from the calculations. This mimics the behavior of the weighted index functions like \code{laspeyres()} and can be useful in situations where indices are present but the weight is missing. If, for example, subindices are newly introduced, the index in December is usually set to 100 while the weight of this subindex is not available. The subindex's value in December can thus be excluded by using the weights \code{w0} also in the unweighted price indices.
 }
 
 \value{
@@ -56,10 +59,10 @@ Functions \code{jevons()}, \code{carli()}, \code{harmonic()}, \code{laspeyres()}
 
 Function \code{aggregate()} returns a \code{data.table} of aggregated values at each \code{grp}-level with the following variables:
 \tabular{rlll}{
-\tab grp \tab \emph{character} \tab the grouping variable \cr
-\tab is_aggregated  \tab \emph{logical} \tab is the value an aggregate (\code{TRUE}) or not (\code{FALSE}); column available if \code{settings$keep.lowest=TRUE} \cr
-\tab w0, wt  \tab \emph{numeric} \tab sum of weights \code{w0} and \code{wt}; columns available if weights were provided \cr
-\tab index  \tab \emph{numeric} \tab aggregates for each \code{index} function
+\tab \code{grp} \tab \emph{character} \tab the grouping variable \cr
+\tab \code{is_aggregated}  \tab \emph{logical} \tab is the value an aggregate (\code{TRUE}) or not (\code{FALSE}); column available if \code{settings$keep.lowest=TRUE} \cr
+\tab \code{w0, wt}  \tab \emph{numeric} \tab sum of weights \code{w0} and \code{wt}; columns available if weights were provided \cr
+\tab \code{index}  \tab \emph{numeric} \tab aggregates for each \code{index} function
 }
 }
 
@@ -68,7 +71,7 @@ Function \code{aggregate()} returns a \code{data.table} of aggregated values at 
 }
 
 \references{
-Eurostat (2024), \emph{Harmonised Index of Consumer Prices (HICP): Methodological Manual}, Luxembourg: Publications Office of the European Union, online available at: \url{https://ec.europa.eu/eurostat/web/products-manuals-and-guidelines/w/ks-gq-24-003}.
+European Commission, Eurostat, \emph{Harmonised Index of Consumer Prices (HICP) - Methodological Manual - 2024 edition}, Publications Office of the European Union, 2024, \url{https://data.europa.eu/doi/10.2785/055028}.
 }
 
 \examples{
@@ -136,7 +139,7 @@ setnames(x=inw, old=c("time","values"), new=c("year","weight"))
 
 # derive coicop tree:
 inw[grepl("^CP",coicop),
-    "tree":=tree(id=gsub("^CP","",coicop), w=weight, w.tol=0.1),
+    "tree":=tree(id=gsub("^CP","",coicop), w=weight, settings=list(w.tol=0.1)),
     by=c("geo","year")]
 
 # except for rounding, we receive total weight of 1000 in each period:
