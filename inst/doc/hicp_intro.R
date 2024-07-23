@@ -14,10 +14,13 @@ knitr::opts_chunk$set(
 # load package:
 library(hicp)
 
+# load additional packages:
+library(data.table)
+
 # set global options:
-options(hicp.coicop.version="ecoicop-hicp") # the coicop version to be used
-options(hicp.unbundle=TRUE) # treatment of coicop bundle codes like 08X
-options(hicp.all.items.code="00") # internal code for the all-items index
+options(hicp.coicop.version="ecoicop-hicp")   # the coicop version to be used
+options(hicp.unbundle=TRUE)                   # treatment of coicop bundle codes like 08X
+options(hicp.all.items.code="00")             # internal code for the all-items index
 
 ## ----warning=FALSE------------------------------------------------------------
 dtd <- hicp.datasets()
@@ -78,9 +81,6 @@ parent(id=ids, flag=FALSE, direct=FALSE)
 child(id=ids, flag=FALSE, direct=FALSE)
 
 ## ----warning=FALSE------------------------------------------------------------
-# load data.table-package:
-require(data.table)
-
 # subset and adjust item weights table:
 item.weights <- item.weights[grepl("^CP", coicop),]
 item.weights[, "coicop":=gsub(pattern="^CP", replacement="", x=coicop)]
@@ -107,9 +107,6 @@ item.weights[t3==TRUE,
         by=c("geo","time")]
 
 ## ----warning=FALSE, fig.width=7, fig.align="center"---------------------------
-# load data.table-package:
-require(data.table)
-
 # import monthly price indices:
 prc <- hicp.dataimport(id="prc_hicp_midx", 
                        filter=list(unit="I15", geo="EA"),

@@ -1,6 +1,6 @@
-829553cce580a53b663133ba381b28ef *DESCRIPTION
+693567a595ff25710dc789982a21bc4b *DESCRIPTION
 5690618e6280b890c7edfebf5a9146db *NAMESPACE
-fc0196180caf49f6012b362cade1e35d *NEWS.md
+f568842cacc96b70dc556859a3d00044 *NEWS.md
 f691874e4b350b2fd22da7247e4372d1 *R/chaining.R
 e0d2a81ae4570b6328b481e12c17946f *R/coicop.bundles.r
 e488e2cfe97f865ee9b80f48bc2cb556 *R/coicop.relatives.r
@@ -16,9 +16,9 @@ dbb912838a010384be9a40bd1b5854b5 *R/zzz.r
 71969d1ede6986ace0819049ca5d903b *build/vignette.rds
 b32400a7e7244042df36cdedad7ba116 *data/countries.rda
 e432789a6d19f28617231e9c23848cbf *data/spec.aggs.rda
-7d24dbae28632fc756ff358f7f12b319 *inst/doc/hicp_intro.R
-0ef9ebb55112d2b7a7c5bae6430de112 *inst/doc/hicp_intro.Rmd
-7fbaa3ebc11eac27b297a788b9defe94 *inst/doc/hicp_intro.html
+620e74803fe908e860354a3da94139df *inst/doc/hicp_intro.R
+ed6a5d7f0f9119dad74221ceb942e24c *inst/doc/hicp_intro.Rmd
+e58afefde413aa8056dc5cad072f9d59 *inst/doc/hicp_intro.html
 531da75991c2d84d5307a03fa5a2cf27 *man/chaining.Rd
 4e904d7d0923667e2d35730d7e4ba577 *man/coicop.bundles.Rd
 2f74fa52a4f7896f62b2264b14650df1 *man/coicop.relatives.Rd
@@ -39,5 +39,5 @@ f1c9c367ba960fb6c25f15e19d14e2f0 *tests/testthat/test_index.aggregation.r
 ebd3be64c21046e80398363feb26b79a *tests/testthat/test_input.checks.R
 bb43677e7ced3e0ae2fc0c21001f7559 *tests/testthat/test_linking.r
 93544e05423680445334a0d945cb4672 *tests/testthat/test_rates.r
-0ef9ebb55112d2b7a7c5bae6430de112 *vignettes/hicp_intro.Rmd
+ed6a5d7f0f9119dad74221ceb942e24c *vignettes/hicp_intro.Rmd
 5384cb0388ea6955a7c04e30d22db3af *vignettes/references.bib
