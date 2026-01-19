@@ -46,7 +46,7 @@ A numeric vector of the same length as \code{x}.
 }
 
 \references{
-European Commission, Eurostat, \emph{Harmonised Index of Consumer Prices (HICP) - Methodological Manual - 2024 edition}, Publications Office of the European Union, 2024, \url{https://data.europa.eu/doi/10.2785/055028}.
+European Commission, Eurostat, \emph{Harmonised Index of Consumer Prices (HICP) - Methodological Manual - 2024 edition}, Publications Office of the European Union, 2024, \doi{10.2785/055028}.
 }
 
 \examples{
@@ -75,13 +75,13 @@ options(restatapi_cores=1)  # set cores for testing on CRAN
 options(hicp.chatty=FALSE)  # suppress package messages and warnings
 
 # import monthly price indices:
-prc <- hicp::data(id="prc_hicp_midx", filter=list(unit="I15", geo="EA"))
+prc <- hicp::data(id="prc_hicp_midx", filters=list(unit="I15", geo="EA"))
 prc[, "time":=as.Date(paste0(time, "-01"))]
 prc[, "year":=as.integer(format(time, "\%Y"))]
 setnames(x=prc, old="values", new="index")
 
 # import item weights:
-inw <- hicp::data(id="prc_hicp_inw", filter=list(geo="EA"))
+inw <- hicp::data(id="prc_hicp_inw", filters=list(geo="EA"))
 inw[, "time":=as.integer(time)]
 setnames(x=inw, old=c("time","values"), new=c("year","weight"))
 

@@ -129,7 +129,7 @@ load(file.path("data", "hicp_prices.RData"))
 ## ----eval=FALSE---------------------------------------------------------------
 # # download monthly price indices:
 # prc <- hicp::data(id="prc_hicp_midx",
-#                   filter=list(unit="I15", geo="EA"),
+#                   filters=list(unit="I15", geo="EA"),
 #                   date.range=c("2014-12", "2024-12"))
 
 ## ----warning=FALSE------------------------------------------------------------
@@ -232,12 +232,12 @@ load(file.path("data", "ooh_itemweights.RData"))
 ## ----eval=FALSE---------------------------------------------------------------
 # # download quarterly OOHPI for euro area:
 # dtp <- hicp::data(id="prc_hpi_ooq",
-#                   filter=list(unit="I15_Q", geo="EA"),
+#                   filters=list(unit="I15_Q", geo="EA"),
 #                   date.range=c("2014-10","2024-12"))
 # 
 # # download annual OOH weights for euro area:
 # dtw <- hicp::data(id="prc_hpi_ooinw",
-#                   filter=list(geo="EA"),
+#                   filters=list(geo="EA"),
 #                   date.range=c("2014","2024"))
 
 ## ----warning=FALSE------------------------------------------------------------
