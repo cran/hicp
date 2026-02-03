@@ -20,10 +20,10 @@ knitr::opts_chunk$set(
 library(hicp)
 
 # set global options:
-options(hicp.coicop.version="ecoicop.hicp")         # the coicop version to be used
-options(hicp.coicop.bundles=hicp:::coicop.bundles)  # coicop bundle code dictionary (e.g., 08X)
-options(hicp.all.items.code="00")                   # internal code for the all-items index
-options(hicp.chatty=TRUE)                           # print package-specific messages and warnings
+options(hicp.coicop.version="ecoicop2.hicp")    # COICOP version to be used
+options(hicp.coicop.prefix="CP")                # prefix of COICOP codes
+options(hicp.all.items.code="TOTAL")            # internal code for the all-items index
+options(hicp.chatty=TRUE)                       # print package-specific messages and warnings
 
 ## ----echo=FALSE---------------------------------------------------------------
 load(file.path("data", "hicp_datasets.RData"))
@@ -40,7 +40,7 @@ load(file.path("data", "hicp_datafilters.RData"))
 
 ## ----eval=FALSE---------------------------------------------------------------
 # # download allowed filters for data set 'prc_hicp_inw':
-# dtf <- datafilters(id="prc_hicp_inw")
+# dtf <- datafilters(id="prc_hicp_iw")
 
 ## ----warning=FALSE------------------------------------------------------------
 # allowed filters:
@@ -49,181 +49,159 @@ unique(dtf$concept)
 # allowed filter values:
 dtf[1:5,]
 
+## ----eval=FALSE---------------------------------------------------------------
+# # download all available item weights:
+# hicp::data(id="prc_hicp_iw", flags=TRUE)
+
 ## ----echo=FALSE---------------------------------------------------------------
 load(file.path("data", "hicp_itemweights.RData"))
 
 ## ----eval=FALSE---------------------------------------------------------------
 # # download item weights with filters:
-# item.weights <- hicp::data(id="prc_hicp_inw",
+# item.weights <- hicp::data(id="prc_hicp_iw",
 #                            filters=list("geo"=c("EA","DE","FR")),
-#                            date.range=c("2015","2024"),
+#                            date.range=c("2019","2025"),
 #                            flags=TRUE)
 
 ## ----warning=FALSE------------------------------------------------------------
-# inspect data:
 item.weights[1:5, ]
-nrow(item.weights) # number of observations
-unique(item.weights$geo) # only EA, DE, and FR
-range(item.weights$time) # from 2015 to 2023
+
+## ----warning=FALSE------------------------------------------------------------
+# all-items code and codes without prefix "CP" are no valid ECOICOP codes:
+is.coicop(id=c("TOTAL","CP01","CP011","CP012","012"))
+
+# games of chance are not valid in ECOICOP-HICP ver. 1:
+is.coicop("CP0943", settings=list(coicop.version="ecoicop1.hicp"))
+
+# but in ECOICOP-HICP ver. 2:
+is.coicop("CP0943", settings=list(coicop.version="ecoicop2.hicp"))
+
+## ----warning=FALSE------------------------------------------------------------
+# get parents:
+parent(id=c("CP01","CP011","CP01111","CP01112"), usedict=TRUE)
+
+# get children:
+child(id=c("CP01","CP011","CP01111","CP01112"), usedict=TRUE)
 
 ## ----warning=FALSE------------------------------------------------------------
 # example codes:
-ids <- c("00","CP00","01","08X")
+ids <- c("CP01","CP011","CP012","CP0111","CP0112")
 
-# check if bundle codes:
-is.bundle(id=ids)
+# derive COICOP tree from top to bottom:
+tree(ids)
 
-# unbundle any bundle codes into their components:
-unbundle(id=ids)
+# still same tree because weights add up:
+tree(id=ids, w=c(0.2,0.08,0.12,0.05,0.03)) 
 
-# bundle codes are no valid ECOICOP codes:
-is.coicop(id=ids)
-
-# games of chance have a valid ECOICOP code:
-is.coicop("0943", settings=list(coicop.version="ecoicop"))
-
-# but not in the ECOICOP-HICP version 1:
-is.coicop("0943", settings=list(coicop.version="ecoicop.hicp"))
+# now (CP011,CP012) because weights do not correctly add up at lower levels:
+tree(id=ids, w=c(0.2,0.08,0.12,0.05,0.01))
 
 ## ----warning=FALSE------------------------------------------------------------
-# example codes:
-ids <- c("00","01","011","01111","01112")
+# validate codes:
+is.spec.agg(id=c("TOTAL","CP01","FOOD","NRG"))
 
-# no direct parent for 01111 and 01112 available:
-parent(id=ids, usedict=FALSE, closest=FALSE, k=1)
-
-# but 011 is one indirect (or closest) parent:
-parent(id=ids, usedict=FALSE, closest=TRUE)
-
-# while 011 has two (indirect) children:
-child(id=ids, usedict=FALSE, closest=TRUE)
-
-## ----warning=FALSE------------------------------------------------------------
-# adjust COICOP codes:
-item.weights[, "coicop":=gsub(pattern="^CP", replacement="", x=coicop)]
-
-# derive separate trees for each time period and country:
-item.weights[, "t1" := tree(id=coicop, w=values, flag=TRUE, settings=list(w.tol=0.1)), by=c("geo","time")]
-item.weights[t1==TRUE,
-        list("n"=uniqueN(coicop),           # varying coicops over time and space
-             "w"=sum(values, na.rm=TRUE)),  # weight sums should equal 1000
-        by=c("geo","time")][order(geo,time),]
-
-# derive merged trees over time, but not across countries:
-item.weights[, "t2" := tree(id=coicop, by=time, w=values, flag=TRUE, settings=list(w.tol=0.1)), by="geo"]
-item.weights[t2==TRUE,
-        list("n"=uniqueN(coicop),           # same selection over time in a country
-             "w"=sum(values, na.rm=TRUE)),  # weight sums should equal 1000
-        by=c("geo","time")][order(geo,time),]
-
-# derive merged trees over countries and time:
-item.weights[, "t3" := tree(id=coicop, by=paste(geo,time), w=values, flag=TRUE, settings=list(w.tol=0.1))]
-item.weights[t3==TRUE,
-        list("n"=uniqueN(coicop),           # same selection over time and across countries
-             "w"=sum(values, na.rm=TRUE)),  # weight sums should equal 1000
-        by=c("geo","time")][order(geo,time),]
+# get compositions of non-processed food and energy:
+spec.agg(id=c("FOOD_NP","NRG"))
 
 ## ----echo=FALSE---------------------------------------------------------------
 load(file.path("data", "hicp_prices.RData"))
 
 ## ----eval=FALSE---------------------------------------------------------------
 # # download monthly price indices:
-# prc <- hicp::data(id="prc_hicp_midx",
-#                   filters=list(unit="I15", geo="EA"),
-#                   date.range=c("2014-12", "2024-12"))
+# dtp <- hicp::data(id="prc_hicp_minr",
+#                   filters=list(unit="I25", geo="EA"),
+#                   date.range=c("2019-12", "2025-12"))
 
 ## ----warning=FALSE------------------------------------------------------------
-# manipulate data:
-prc[, "time":=as.Date(paste0(time, "-01"))]
-prc[, "year":=as.integer(format(time, "%Y"))]
-prc[, "coicop" := gsub(pattern="^CP", replacement="", x=coicop)]
-setnames(x=prc, old="values", new="index")
+# convert into proper dates:
+dtp[, "time":=as.Date(paste0(time, "-01"))]
+dtp[, "year":=as.integer(format(time, "%Y"))]
+setnames(x=dtp, old="values", new="index")
 
 ## ----warning=FALSE------------------------------------------------------------
 # unchain price indices:
-prc[, "dec_ratio" := unchain(x=index, t=time), by="coicop"]
+dtp[, "dec_ratio" := unchain(x=index, t=time), by="coicop18"]
 
 ## ----warning=FALSE------------------------------------------------------------
 # manipulate item weights:
-inw <- item.weights[geo=="EA", list(coicop,geo,time,values,t1)]
-inw[, "time":=as.integer(time)]
-setnames(x=inw, old=c("time","values","t1"), new=c("year","weight","tree"))
+dtw <- item.weights[geo=="EA", list(coicop18,geo,time,values)]
+dtw[, "time":=as.integer(time)]
+setnames(x=dtw, old=c("time","values"), new=c("year","weight"))
 
 # merge price indices and item weights:
-hicp.data <- merge(x=prc, y=inw, by=c("geo","coicop","year"), all.x=TRUE)
+dtall <- merge(x=dtp, y=dtw, by=c("geo","coicop18","year"), all.x=TRUE)
 
 ## ----warning=FALSE, fig.width=7, fig.align="center"---------------------------
+# derive COICOP tree for index aggregation:
+dtall[weight>0 & !is.na(dec_ratio), 
+      "tree" := tree(id=coicop18, w=weight, flag=TRUE, settings=list(w.tol=0.1)),
+      by="time"]
+
 # compute all-items HICP in one aggregation step:
-hicp.own <- hicp.data[tree==TRUE, 
-                      list("laspey"=laspeyres(x=dec_ratio, w0=weight)), 
-                      by="time"]
+hicp.own <- dtall[tree==TRUE, 
+                  list("laspey"=laspeyres(x=dec_ratio, w0=weight)), 
+                  by="time"]
 setorderv(x=hicp.own, cols="time")
 
 # chain the resulting index:
 hicp.own[, "chain_laspey" := chain(x=laspey, t=time, by=12)]
 
-# rebase the index to 2015:
-hicp.own[, "chain_laspey_15" := rebase(x=chain_laspey, t=time, t.ref="2015")]
+# rebase the index to 2025:
+hicp.own[, "chain_laspey_25" := rebase(x=chain_laspey, t=time, t.ref="2025")]
 
 # plot all-items index:
-plot(chain_laspey_15~time, data=hicp.own, type="l", xlab="Time", ylab="Index")
+plot(chain_laspey_25~time, data=hicp.own, type="l", xlab="Time", ylab="Index")
 title("Euro area HICP")
 abline(h=0, lty="dashed")
 
 ## ----warning=FALSE------------------------------------------------------------
 # compute all-items HICP gradually from bottom to top:
-hicp.own.all <- hicp.data[ , aggregate.tree(x=dec_ratio, w0=weight, id=coicop, formula=laspeyres), 
-                           by="time"]
+hicp.own.all <- dtall[weight>0 & !is.na(dec_ratio),
+                      aggregate.tree(x=dec_ratio, w0=weight, id=coicop18, formula=laspeyres), 
+                      by="time"]
 setorderv(x=hicp.own.all, cols="time")
 hicp.own.all[, "chain_laspey" := chain(x=laspeyres, t=time, by=12), by="id"]
-hicp.own.all[, "chain_laspey_15" := rebase(x=chain_laspey, t=time, t.ref="2015"), by="id"]
+hicp.own.all[, "chain_laspey_25" := rebase(x=chain_laspey, t=time, t.ref="2025"), by="id"]
 
 ## ----warning=FALSE------------------------------------------------------------
-# compare all-items HICP from direct and step-wise aggregation:
-agg.comp <- merge(x=hicp.own.all[id=="00", list(time, "index_stpwse"=chain_laspey_15)],
-                  y=hicp.own[, list(time, "index_direct"=chain_laspey_15)],
-                  by="time")
-
-# no differences -> consistent in aggregation:
-nrow(agg.comp[abs(index_stpwse-index_direct)>1e-4,])
+# all-items HICP from direct and gradual aggregation identical:
+all(abs(hicp.own.all[id=="TOTAL", chain_laspey_25]-hicp.own$chain_laspey_25)<0.1)
 
 ## ----warning=FALSE------------------------------------------------------------
 # compute food and energy by aggregation:
-spa <- spec.aggs[code%in%c("FOOD","NRG"), ]
-hicp.data[time>="2019-12-01",
-          aggregate(x=dec_ratio, w0=weight, id=coicop,
-                    agg=spa$composition,
-                    settings=list(names=spa$code)), 
-          by="time"]
+dtall[time>="2019-12-01",
+      aggregate(x=dec_ratio, w0=weight, id=coicop18,
+                agg=spec.agg(id=c("FOOD","NRG")),
+                settings=list(exact=FALSE, names=c("FOOD","NRG"))), 
+      by="time"]
 
-# compute overall index excluding food and energy by disaggregation
-hicp.data[time>="2019-12-01",
-          disaggregate(x=dec_ratio, w0=weight, id=coicop,
-                       agg=list("00"=c("FOOD","NRG")),
-                       settings=list(names="TOT_X_FOOD_NRG")), 
-          by="time"]
+# compute overall index excluding food and energy by disaggregation:
+dtall[time>="2019-12-01",
+      disaggregate(x=dec_ratio, w0=weight, id=coicop18,
+                   agg=list("TOTAL"=c("FOOD","NRG")),
+                   settings=list(names="TOT_X_FOOD_NRG")), 
+      by="time"]
 
-## ----warning=FALSE, fig.width=7, fig.align="center"---------------------------
+## ----warning=FALSE, fig.width=7, fig.height=4, fig.align="center"-------------
 # compute annual rates of change for the all-items HICP:
-hicp.data[, "ar" := rates(x=index, t=time, type="year"), by=c("geo","coicop")]
+dtall[, "ar" := rates(x=index, t=time, type="year"), by=c("geo","coicop18")]
 
-# add all-items hicp:
-hicp.data <- merge(x=hicp.data,
-                   y=hicp.data[coicop=="00", list(geo,time,index,weight)],
-                   by=c("geo","time"), all.x=TRUE, suffixes=c("","_all"))
+# add all-items HICP:
+dtall <- merge(x=dtall,
+               y=dtall[coicop18=="TOTAL", list(geo,time,index,weight)],
+               by=c("geo","time"), all.x=TRUE, suffixes=c("","_all"))
 
-# ribe decomposition:
-hicp.data[, "ribe" := contrib(x=index, w=weight, t=time, 
-                              x.all=index_all, w.all=weight_all, type="year"),
-          by="coicop"]
+# Ribe decomposition:
+dtall[, "ribe" := contrib(x=index, w=weight, t=time, 
+                          x.all=index_all, w.all=weight_all, type="year"),
+      by="coicop18"]
 
 # annual change rates and contribtuions over time:
-plot(ar~time, data=hicp.data[coicop=="00",],
-     type="l", xlab="Time", ylab="", ylim=c(-2,12))
-lines(ribe~time, data=hicp.data[coicop=="011"], col="red")
+plot(ar~time, data=dtall[coicop18=="TOTAL",], type="l", xlab="Time", ylab="", ylim=c(-1,13))
+lines(ribe~time, data=dtall[coicop18=="CP011"], col="red")
 title("Contributions of food to overall inflation")
-legend("topleft", col=c("black","red"), lty=1, bty="n", 
-       legend=c("Overall inflation (in %)", "Contributions of food (in pp-points)"))
+legend("topleft", col=c("red","black"), lty=1, bty="n", 
+       legend=c("Contributions of food (in pp-points)", "Overall inflation (in %)"))
 
 ## ----echo=FALSE---------------------------------------------------------------
 load(file.path("data", "ooh_prices.RData"))
