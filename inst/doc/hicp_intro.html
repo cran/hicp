@@ -49,8 +49,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -61,7 +62,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -149,7 +150,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 div.csl-bib-body { }
 div.csl-entry {
 clear: both;
-margin-bottom: 0em;
 }
 .hanging div.csl-entry {
 margin-left:2em;
@@ -363,7 +363,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Introduction to the
 <code>hicp</code>-package</h1>
 <h4 class="author">Sebastian Weinand</h4>
-<h4 class="date">February 2026</h4>
+<h4 class="date">November 2026</h4>
 
 
 <div id="TOC">
@@ -525,17 +525,17 @@ options:</p>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                           <span class="at">filters=</span><span class="fu">list</span>(<span class="st">&quot;geo&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;EA&quot;</span>,<span class="st">&quot;DE&quot;</span>,<span class="st">&quot;FR&quot;</span>)), </span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>                           <span class="at">date.range=</span><span class="fu">c</span>(<span class="st">&quot;2019&quot;</span>,<span class="st">&quot;2025&quot;</span>), </span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>                           <span class="at">flags=</span><span class="cn">TRUE</span>)</span></code></pre></div>
-<p>The downloaded object <code>item.weights</code> contains 11572 HICP
+<p>The downloaded object <code>item.weights</code> contains 11600 HICP
 item weights for the euro area, Germany, and France from 2019 to
 2025.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>item.weights[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ]</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; Key: &lt;coicop18, statinfo, geo, time&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt;    coicop18 statinfo    geo   time values  flags conf_status</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt;      &lt;char&gt;   &lt;char&gt; &lt;char&gt; &lt;char&gt;  &lt;num&gt; &lt;char&gt;      &lt;char&gt;</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; 1:       AP       IW     DE   2019 123.29   &lt;NA&gt;            </span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 2:       AP       IW     DE   2020 115.02   &lt;NA&gt;            </span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 3:       AP       IW     DE   2021 146.58   &lt;NA&gt;            </span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 4:       AP       IW     DE   2022 116.73   &lt;NA&gt;            </span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; Key: &lt;coicop18, statinfo, geo, time, values&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt;    coicop18 statinfo    geo   time values  flags</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt;      &lt;char&gt;   &lt;char&gt; &lt;char&gt; &lt;char&gt;  &lt;num&gt; &lt;char&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; 1:       AP       IW     DE   2019 123.29   &lt;NA&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 2:       AP       IW     DE   2020 115.02   &lt;NA&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 3:       AP       IW     DE   2021 146.58   &lt;NA&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 4:       AP       IW     DE   2022 116.73   &lt;NA&gt;</span></span>
 <span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; 5:       AP       IW     DE   2023 166.36   &lt;NA&gt;</span></span></code></pre></div>
 </div>
 </div>
@@ -659,16 +659,16 @@ indices at the lowest level in a single step into the all-items index
 <p>For the HICP, various special aggregates like food and energy are
 calculated. Each special aggregate is composed of a selection of COICOP
 codes. This composition is fix over time but depends on the COICOP
-version. The function <code>spec.agg()</code> provides the definitions
-of all HICP special aggregates, while the function
-<code>is.spec.agg()</code> validates the codes of special
+version. The function <code>special.agg()</code> provides the
+definitions of all HICP special aggregates, while the function
+<code>is.special.agg()</code> validates the codes of special
 aggregates.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># validate codes:</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">is.spec.agg</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="st">&quot;TOTAL&quot;</span>,<span class="st">&quot;CP01&quot;</span>,<span class="st">&quot;FOOD&quot;</span>,<span class="st">&quot;NRG&quot;</span>))</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; [1] FALSE FALSE  TRUE  TRUE</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">is.special.agg</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="st">&quot;TOTAL&quot;</span>,<span class="st">&quot;CP01&quot;</span>,<span class="st">&quot;FOOD&quot;</span>,<span class="st">&quot;NRG&quot;</span>,<span class="st">&quot;AP&quot;</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; [1] FALSE FALSE  TRUE  TRUE  TRUE</span></span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
 <span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co"># get compositions of non-processed food and energy:</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="fu">spec.agg</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="st">&quot;FOOD_NP&quot;</span>,<span class="st">&quot;NRG&quot;</span>))</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="fu">special.agg</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="st">&quot;FOOD_NP&quot;</span>,<span class="st">&quot;NRG&quot;</span>))</span>
 <span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt; $FOOD_NP</span></span>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;CP01121&quot; &quot;CP01122&quot; &quot;CP01124&quot; &quot;CP01131&quot; &quot;CP01134&quot; &quot;CP01137&quot; &quot;CP01148&quot;</span></span>
 <span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt;  [8] &quot;CP01161&quot; &quot;CP01162&quot; &quot;CP01163&quot; &quot;CP01164&quot; &quot;CP01165&quot; &quot;CP01168&quot; &quot;CP01171&quot;</span></span>
@@ -713,19 +713,22 @@ December 2019 to December 2025.</p>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>dtp[, <span class="st">&quot;time&quot;</span><span class="sc">:=</span><span class="fu">as.Date</span>(<span class="fu">paste0</span>(time, <span class="st">&quot;-01&quot;</span>))]</span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>dtp[, <span class="st">&quot;year&quot;</span><span class="sc">:=</span><span class="fu">as.integer</span>(<span class="fu">format</span>(time, <span class="st">&quot;%Y&quot;</span>))]</span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="fu">setnames</span>(<span class="at">x=</span>dtp, <span class="at">old=</span><span class="st">&quot;values&quot;</span>, <span class="at">new=</span><span class="st">&quot;index&quot;</span>)</span></code></pre></div>
-<p>Second, the price indices are unchained separately for each ECOICOP
-using the function <code>unchain()</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># unchain price indices:</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>dtp[, <span class="st">&quot;dec_ratio&quot;</span> <span class="sc">:=</span> <span class="fu">unchain</span>(<span class="at">x=</span>index, <span class="at">t=</span>time), by<span class="ot">=</span><span class="st">&quot;coicop18&quot;</span>]</span></code></pre></div>
-<p>Next, the price indices <code>prc</code> and item weights
-<code>inw</code> are merged into one data set.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># manipulate item weights:</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>dtw <span class="ot">&lt;-</span> item.weights[geo<span class="sc">==</span><span class="st">&quot;EA&quot;</span>, <span class="fu">list</span>(coicop18,geo,time,values)]</span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>dtw[, <span class="st">&quot;time&quot;</span><span class="sc">:=</span><span class="fu">as.integer</span>(time)]</span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="fu">setnames</span>(<span class="at">x=</span>dtw, <span class="at">old=</span><span class="fu">c</span>(<span class="st">&quot;time&quot;</span>,<span class="st">&quot;values&quot;</span>), <span class="at">new=</span><span class="fu">c</span>(<span class="st">&quot;year&quot;</span>,<span class="st">&quot;weight&quot;</span>))</span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co"># merge price indices and item weights:</span></span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>dtall <span class="ot">&lt;-</span> <span class="fu">merge</span>(<span class="at">x=</span>dtp, <span class="at">y=</span>dtw, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;coicop18&quot;</span>,<span class="st">&quot;year&quot;</span>), <span class="at">all.x=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Next, the price indices <code>dtp</code> and item weights
+<code>dtw</code> are merged into one data set.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># manipulate item weights:</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>dtw <span class="ot">&lt;-</span> item.weights[geo<span class="sc">==</span><span class="st">&quot;EA&quot;</span>, <span class="fu">list</span>(coicop18,geo,time,values)]</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>dtw[, <span class="st">&quot;time&quot;</span><span class="sc">:=</span><span class="fu">as.integer</span>(time)]</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="fu">setnames</span>(<span class="at">x=</span>dtw, <span class="at">old=</span><span class="fu">c</span>(<span class="st">&quot;time&quot;</span>,<span class="st">&quot;values&quot;</span>), <span class="at">new=</span><span class="fu">c</span>(<span class="st">&quot;year&quot;</span>,<span class="st">&quot;weight&quot;</span>))</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co"># combine price indices and item weights:</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>dtall <span class="ot">&lt;-</span> <span class="fu">CJ</span>(<span class="st">&quot;coicop18&quot;</span><span class="ot">=</span><span class="fu">unique</span>(dtw<span class="sc">$</span>coicop18), <span class="st">&quot;time&quot;</span><span class="ot">=</span><span class="fu">unique</span>(dtp<span class="sc">$</span>time))</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>dtall[, <span class="st">&quot;year&quot;</span><span class="sc">:=</span><span class="fu">year</span>(time)]</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>dtall[dtp, <span class="st">&quot;index&quot;</span><span class="sc">:=</span>i.index, on<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;coicop18&quot;</span>,<span class="st">&quot;time&quot;</span>)]</span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>dtall[dtw, <span class="st">&quot;weight&quot;</span><span class="sc">:=</span>i.weight, on<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;coicop18&quot;</span>,<span class="st">&quot;year&quot;</span>)]</span></code></pre></div>
+<p>The price indices are unchained separately for each ECOICOP using the
+function <code>unchain()</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># unchain price indices:</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>dtall[, <span class="st">&quot;dec_ratio&quot;</span> <span class="sc">:=</span> <span class="fu">unchain</span>(<span class="at">x=</span>index, <span class="at">t=</span>time), by<span class="ot">=</span><span class="st">&quot;coicop18&quot;</span>]</span></code></pre></div>
 <p>For aggregating the unchained price indices in one step into the
 all-items index, the lowest level of the COICOP tree must be derived.
 Based on the derived COICOP tree, the unchained price indices are
@@ -746,13 +749,13 @@ below.</p>
 <span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="fu">setorderv</span>(<span class="at">x=</span>hicp.own, <span class="at">cols=</span><span class="st">&quot;time&quot;</span>)</span>
 <span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a></span>
 <span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co"># chain the resulting index:</span></span>
-<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a>hicp.own[, <span class="st">&quot;chain_laspey&quot;</span> <span class="sc">:=</span> <span class="fu">chain</span>(<span class="at">x=</span>laspey, <span class="at">t=</span>time, <span class="at">by=</span><span class="dv">12</span>)]</span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a>hicp.own[, <span class="st">&quot;index&quot;</span> <span class="sc">:=</span> <span class="fu">chain</span>(<span class="at">x=</span>laspey, <span class="at">t=</span>time, <span class="at">by=</span><span class="dv">12</span>)]</span>
 <span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a></span>
 <span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a><span class="co"># rebase the index to 2025:</span></span>
-<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a>hicp.own[, <span class="st">&quot;chain_laspey_25&quot;</span> <span class="sc">:=</span> <span class="fu">rebase</span>(<span class="at">x=</span>chain_laspey, <span class="at">t=</span>time, <span class="at">t.ref=</span><span class="st">&quot;2025&quot;</span>)]</span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a>hicp.own[, <span class="st">&quot;index25&quot;</span> <span class="sc">:=</span> <span class="fu">rebase</span>(<span class="at">x=</span>index, <span class="at">t=</span>time, <span class="at">t.ref=</span><span class="st">&quot;2025&quot;</span>)]</span>
 <span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a></span>
 <span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="co"># plot all-items index:</span></span>
-<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a><span class="fu">plot</span>(chain_laspey_25<span class="sc">~</span>time, <span class="at">data=</span>hicp.own, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Time&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Index&quot;</span>)</span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a><span class="fu">plot</span>(index25<span class="sc">~</span>time, <span class="at">data=</span>hicp.own, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Time&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Index&quot;</span>)</span>
 <span id="cb17-20"><a href="#cb17-20" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Euro area HICP&quot;</span>)</span>
 <span id="cb17-21"><a href="#cb17-21" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
 <p><img role="img" aria-label src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAEgCAMAAABcujGyAAAApVBMVEUAAAAAACsAAFUAKysAK1UAK4AAVYAAVaorAAArACsrKwArK1UrVYArVaorgNRVAABVKwBVKytVK4BVgKpVgNRVqqpVqtRVqv+AKwCAKyuAK1WAVQCAVSuAgKqAqoCAqtSA1P+qVQCqVSuqgFWqqv+q1Kqq1NSq1P+q/6qq///UgCvUqlXUqoDU1KrU1NTU1P/U////qlX/1ID/1Kr//6r//9T////VN0s9AAAACXBIWXMAAA7DAAAOwwHHb6hkAAALSUlEQVR4nO3dC3ejxgGGYdld185lV+ktdtu0sdJLYpptLa/M//9pZRiQQDAjBDPwAe9zTnZtSStG8hsugyxtUkDYZuoBAD4ECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkECmkE6pNsSnevEe7+/cneb/b3/emb/3ydLe+bn6vLt9+tEoH6TBDo4btiiZ+qy795jrD4WSBQn/EDzf4sPUZf/hwQqE+yuX05frPLvzlszbot2dz8/bvNbbbl/fV3m81v/nDK51ezBvzmOa3c5v2nbBX48bV+rdESaJbkhx/T9MvTxn6XL//Ldr2rUAL18QRarNaSsxXc/rRJLm+T/Qvjw0vtWqMZaPaHXeL7nz/+77T8hEDR5rSJfWwEevdz+t/07aGo9JP9B1lgv301l1ZuszNr0fyi6rXFrUtFoNm939eWnwf6eVv9H2VdCNTHF+ijuYG9rPzL+vyPr01w5W3sPziuDMtrjWagp3jPls8+KFp4As23ueU2+rQJfv+hDK68MGvuuGGvXJum1wS62i08gXq17IOWm+88mXKLvC9WqHlyH/72eVsJdH+KrHptceuzfdDGJt7+y2+ZB0WbS4E21qD22sO2vgZ9LO6hem2aXjhIMlEm6933LBGoTy0QG9x+Uwm0sQ9qV6Wta9mza42u00xrRqA+p33QLJT8WN2UUwn0/Cg+/97c5r4a8c33Zioz38M8Xmt0mKgn0KkHIK0W6PFopxLo+Tzosa9KoMU8qDlGqlxb3Np9qvNjSqApgfrVAk3fsna+/de2Fqg9k/TH478wx+kffkzs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" alt style="display: block; margin: auto;" /></p>
@@ -760,18 +763,18 @@ below.</p>
 following the COICOP tree, which produces in addition to the all-items
 index all lower-level indices.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># compute all-items HICP gradually from bottom to top:</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>hicp.own.all <span class="ot">&lt;-</span> dtall[weight<span class="sc">&gt;</span><span class="dv">0</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(dec_ratio),</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>                      <span class="fu">aggregate.tree</span>(<span class="at">x=</span>dec_ratio, <span class="at">w0=</span>weight, <span class="at">id=</span>coicop18, <span class="at">formula=</span>laspeyres), </span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>                      by<span class="ot">=</span><span class="st">&quot;time&quot;</span>]</span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="fu">setorderv</span>(<span class="at">x=</span>hicp.own.all, <span class="at">cols=</span><span class="st">&quot;time&quot;</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>hicp.own.all[, <span class="st">&quot;chain_laspey&quot;</span> <span class="sc">:=</span> <span class="fu">chain</span>(<span class="at">x=</span>laspeyres, <span class="at">t=</span>time, <span class="at">by=</span><span class="dv">12</span>), by<span class="ot">=</span><span class="st">&quot;id&quot;</span>]</span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>hicp.own.all[, <span class="st">&quot;chain_laspey_25&quot;</span> <span class="sc">:=</span> <span class="fu">rebase</span>(<span class="at">x=</span>chain_laspey, <span class="at">t=</span>time, <span class="at">t.ref=</span><span class="st">&quot;2025&quot;</span>), by<span class="ot">=</span><span class="st">&quot;id&quot;</span>]</span></code></pre></div>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>hicp.own.all <span class="ot">&lt;-</span> dtall[, <span class="fu">aggregate.tree</span>(<span class="at">x=</span>dec_ratio, <span class="at">w0=</span>weight, <span class="at">id=</span>coicop18, <span class="at">formula=</span>laspeyres), </span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>                      by<span class="ot">=</span><span class="st">&quot;time&quot;</span>]</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="fu">setorderv</span>(<span class="at">x=</span>hicp.own.all, <span class="at">cols=</span><span class="st">&quot;time&quot;</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>hicp.own.all[, <span class="st">&quot;index&quot;</span> <span class="sc">:=</span> <span class="fu">chain</span>(<span class="at">x=</span>laspeyres, <span class="at">t=</span>time, <span class="at">by=</span><span class="dv">12</span>), by<span class="ot">=</span><span class="st">&quot;id&quot;</span>]</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>hicp.own.all[, <span class="st">&quot;index25&quot;</span> <span class="sc">:=</span> <span class="fu">rebase</span>(<span class="at">x=</span>index, <span class="at">t=</span>time, <span class="at">t.ref=</span><span class="st">&quot;2025&quot;</span>), by<span class="ot">=</span><span class="st">&quot;id&quot;</span>]</span></code></pre></div>
 <p>A comparison to the all-items index that has been computed in one
 step shows no differences, which highlights the consistency in
 aggregation of the Laspeyres-type index.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># all-items HICP from direct and gradual aggregation identical:</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">abs</span>(hicp.own.all[id<span class="sc">==</span><span class="st">&quot;TOTAL&quot;</span>, chain_laspey_25]<span class="sc">-</span>hicp.own<span class="sc">$</span>chain_laspey_25)<span class="sc">&lt;</span><span class="fl">0.1</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>dtcomp <span class="ot">&lt;-</span> <span class="fu">merge</span>(<span class="at">x=</span>hicp.own.all[id<span class="sc">==</span><span class="st">&quot;TOTAL&quot;</span>, ], <span class="at">y=</span>hicp.own, <span class="at">by=</span><span class="st">&quot;time&quot;</span>, <span class="at">all=</span><span class="cn">TRUE</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">all</span>(dtcomp[, <span class="fu">abs</span>(index25.x<span class="sc">-</span>index25.y)<span class="sc">&lt;</span><span class="fl">0.1</span>], <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>User-defined aggregates can be easily calculated with the functions
 <code>aggregate()</code> and <code>disaggregate()</code>. This is
 particularly useful for the calculation of the HICP special aggregates
@@ -780,42 +783,42 @@ below.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co"># compute food and energy by aggregation:</span></span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>dtall[time<span class="sc">&gt;=</span><span class="st">&quot;2019-12-01&quot;</span>,</span>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>      <span class="fu">aggregate</span>(<span class="at">x=</span>dec_ratio, <span class="at">w0=</span>weight, <span class="at">id=</span>coicop18,</span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>                <span class="at">agg=</span><span class="fu">spec.agg</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="st">&quot;FOOD&quot;</span>,<span class="st">&quot;NRG&quot;</span>)),</span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>                <span class="at">settings=</span><span class="fu">list</span>(<span class="at">exact=</span><span class="cn">FALSE</span>, <span class="at">names=</span><span class="fu">c</span>(<span class="st">&quot;FOOD&quot;</span>,<span class="st">&quot;NRG&quot;</span>))), </span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>                <span class="at">agg=</span><span class="fu">special.agg</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="st">&quot;FOOD&quot;</span>,<span class="st">&quot;NRG&quot;</span>)),</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>                <span class="at">settings=</span><span class="fu">list</span>(<span class="at">names=</span><span class="fu">c</span>(<span class="st">&quot;FOOD&quot;</span>,<span class="st">&quot;NRG&quot;</span>))), </span>
 <span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>      by<span class="ot">=</span><span class="st">&quot;time&quot;</span>]</span>
 <span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt;            time     id     w0 laspeyres</span></span>
 <span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt;          &lt;Date&gt; &lt;char&gt;  &lt;num&gt;     &lt;num&gt;</span></span>
-<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt;   1: 2019-12-01   FOOD     NA        NA</span></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt;   2: 2019-12-01    NRG     NA        NA</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt;   1: 2019-12-01   FOOD 190.14        NA</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt;   2: 2019-12-01    NRG 101.32        NA</span></span>
 <span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt;   3: 2020-01-01   FOOD 190.71 1.0068145</span></span>
 <span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="co">#&gt;   4: 2020-01-01    NRG  98.48 1.0080618</span></span>
 <span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a><span class="co">#&gt;   5: 2020-02-01   FOOD 190.71 1.0103345</span></span>
 <span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a><span class="co">#&gt;  ---                                   </span></span>
 <span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a><span class="co">#&gt; 142: 2025-10-01    NRG  93.97 0.9797652</span></span>
-<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a><span class="co">#&gt; 143: 2025-11-01   FOOD 193.16 1.0251769</span></span>
+<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a><span class="co">#&gt; 143: 2025-11-01   FOOD 193.16 1.0251750</span></span>
 <span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a><span class="co">#&gt; 144: 2025-11-01    NRG  93.97 0.9890975</span></span>
-<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a><span class="co">#&gt; 145: 2025-12-01   FOOD 193.16 1.0250906</span></span>
+<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a><span class="co">#&gt; 145: 2025-12-01   FOOD 193.16 1.0250893</span></span>
 <span id="cb20-19"><a href="#cb20-19" tabindex="-1"></a><span class="co">#&gt; 146: 2025-12-01    NRG  93.97 0.9806562</span></span>
 <span id="cb20-20"><a href="#cb20-20" tabindex="-1"></a></span>
 <span id="cb20-21"><a href="#cb20-21" tabindex="-1"></a><span class="co"># compute overall index excluding food and energy by disaggregation:</span></span>
 <span id="cb20-22"><a href="#cb20-22" tabindex="-1"></a>dtall[time<span class="sc">&gt;=</span><span class="st">&quot;2019-12-01&quot;</span>,</span>
 <span id="cb20-23"><a href="#cb20-23" tabindex="-1"></a>      <span class="fu">disaggregate</span>(<span class="at">x=</span>dec_ratio, <span class="at">w0=</span>weight, <span class="at">id=</span>coicop18,</span>
 <span id="cb20-24"><a href="#cb20-24" tabindex="-1"></a>                   <span class="at">agg=</span><span class="fu">list</span>(<span class="st">&quot;TOTAL&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;FOOD&quot;</span>,<span class="st">&quot;NRG&quot;</span>)),</span>
-<span id="cb20-25"><a href="#cb20-25" tabindex="-1"></a>                   <span class="at">settings=</span><span class="fu">list</span>(<span class="at">names=</span><span class="st">&quot;TOT_X_FOOD_NRG&quot;</span>)), </span>
+<span id="cb20-25"><a href="#cb20-25" tabindex="-1"></a>                   <span class="at">settings=</span><span class="fu">list</span>(<span class="at">names=</span><span class="st">&quot;TOT_X_NRG_FOOD&quot;</span>)), </span>
 <span id="cb20-26"><a href="#cb20-26" tabindex="-1"></a>      by<span class="ot">=</span><span class="st">&quot;time&quot;</span>]</span>
 <span id="cb20-27"><a href="#cb20-27" tabindex="-1"></a><span class="co">#&gt;           time             id     w0 laspeyres</span></span>
 <span id="cb20-28"><a href="#cb20-28" tabindex="-1"></a><span class="co">#&gt;         &lt;Date&gt;         &lt;char&gt;  &lt;num&gt;     &lt;num&gt;</span></span>
-<span id="cb20-29"><a href="#cb20-29" tabindex="-1"></a><span class="co">#&gt;  1: 2019-12-01 TOT_X_FOOD_NRG     NA        NA</span></span>
-<span id="cb20-30"><a href="#cb20-30" tabindex="-1"></a><span class="co">#&gt;  2: 2020-01-01 TOT_X_FOOD_NRG 710.78 0.9829889</span></span>
-<span id="cb20-31"><a href="#cb20-31" tabindex="-1"></a><span class="co">#&gt;  3: 2020-02-01 TOT_X_FOOD_NRG 710.78 0.9866878</span></span>
-<span id="cb20-32"><a href="#cb20-32" tabindex="-1"></a><span class="co">#&gt;  4: 2020-03-01 TOT_X_FOOD_NRG 710.78 0.9979379</span></span>
-<span id="cb20-33"><a href="#cb20-33" tabindex="-1"></a><span class="co">#&gt;  5: 2020-04-01 TOT_X_FOOD_NRG 710.78 1.0053489</span></span>
+<span id="cb20-29"><a href="#cb20-29" tabindex="-1"></a><span class="co">#&gt;  1: 2019-12-01 TOT_X_NRG_FOOD 708.53        NA</span></span>
+<span id="cb20-30"><a href="#cb20-30" tabindex="-1"></a><span class="co">#&gt;  2: 2020-01-01 TOT_X_NRG_FOOD 710.78 0.9829889</span></span>
+<span id="cb20-31"><a href="#cb20-31" tabindex="-1"></a><span class="co">#&gt;  3: 2020-02-01 TOT_X_NRG_FOOD 710.78 0.9866878</span></span>
+<span id="cb20-32"><a href="#cb20-32" tabindex="-1"></a><span class="co">#&gt;  4: 2020-03-01 TOT_X_NRG_FOOD 710.78 0.9979379</span></span>
+<span id="cb20-33"><a href="#cb20-33" tabindex="-1"></a><span class="co">#&gt;  5: 2020-04-01 TOT_X_NRG_FOOD 710.78 1.0053489</span></span>
 <span id="cb20-34"><a href="#cb20-34" tabindex="-1"></a><span class="co">#&gt; ---                                           </span></span>
-<span id="cb20-35"><a href="#cb20-35" tabindex="-1"></a><span class="co">#&gt; 69: 2025-08-01 TOT_X_FOOD_NRG 712.80 1.0207492</span></span>
-<span id="cb20-36"><a href="#cb20-36" tabindex="-1"></a><span class="co">#&gt; 70: 2025-09-01 TOT_X_FOOD_NRG 712.80 1.0222860</span></span>
-<span id="cb20-37"><a href="#cb20-37" tabindex="-1"></a><span class="co">#&gt; 71: 2025-10-01 TOT_X_FOOD_NRG 712.80 1.0251807</span></span>
-<span id="cb20-38"><a href="#cb20-38" tabindex="-1"></a><span class="co">#&gt; 72: 2025-11-01 TOT_X_FOOD_NRG 712.80 1.0196345</span></span>
-<span id="cb20-39"><a href="#cb20-39" tabindex="-1"></a><span class="co">#&gt; 73: 2025-12-01 TOT_X_FOOD_NRG 712.80 1.0233334</span></span></code></pre></div>
+<span id="cb20-35"><a href="#cb20-35" tabindex="-1"></a><span class="co">#&gt; 69: 2025-08-01 TOT_X_NRG_FOOD 712.80 1.0207492</span></span>
+<span id="cb20-36"><a href="#cb20-36" tabindex="-1"></a><span class="co">#&gt; 70: 2025-09-01 TOT_X_NRG_FOOD 712.80 1.0222860</span></span>
+<span id="cb20-37"><a href="#cb20-37" tabindex="-1"></a><span class="co">#&gt; 71: 2025-10-01 TOT_X_NRG_FOOD 712.80 1.0251807</span></span>
+<span id="cb20-38"><a href="#cb20-38" tabindex="-1"></a><span class="co">#&gt; 72: 2025-11-01 TOT_X_NRG_FOOD 712.80 1.0196345</span></span>
+<span id="cb20-39"><a href="#cb20-39" tabindex="-1"></a><span class="co">#&gt; 73: 2025-12-01 TOT_X_NRG_FOOD 712.80 1.0233334</span></span></code></pre></div>
 <p>The resulting aggregates can finally be chained and rebased as shown
 before.</p>
 <p>User-defined functions can be passed to <code>aggregate()</code> as
@@ -833,21 +836,21 @@ same month one year before. Both rates can be easily derived using the
 function <code>rates()</code>. Contributions of the price changes of
 individual items to the overall annual rate of change can be computed by
 the Ribe method as implemented in the function
-<code>contrib()</code>.</p>
+<code>contributions()</code>.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># compute annual rates of change for the all-items HICP:</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>dtall[, <span class="st">&quot;ar&quot;</span> <span class="sc">:=</span> <span class="fu">rates</span>(<span class="at">x=</span>index, <span class="at">t=</span>time, <span class="at">type=</span><span class="st">&quot;year&quot;</span>), by<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;coicop18&quot;</span>)]</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>dtall[, <span class="st">&quot;ar&quot;</span> <span class="sc">:=</span> <span class="fu">rates</span>(<span class="at">x=</span>index, <span class="at">t=</span>time, <span class="at">type=</span><span class="st">&quot;year&quot;</span>), by<span class="ot">=</span><span class="st">&quot;coicop18&quot;</span>]</span>
 <span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a></span>
 <span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="co"># add all-items HICP:</span></span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>dtall <span class="ot">&lt;-</span> <span class="fu">merge</span>(<span class="at">x=</span>dtall,</span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>               <span class="at">y=</span>dtall[coicop18<span class="sc">==</span><span class="st">&quot;TOTAL&quot;</span>, <span class="fu">list</span>(geo,time,index,weight)],</span>
-<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>               <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;geo&quot;</span>,<span class="st">&quot;time&quot;</span>), <span class="at">all.x=</span><span class="cn">TRUE</span>, <span class="at">suffixes=</span><span class="fu">c</span>(<span class="st">&quot;&quot;</span>,<span class="st">&quot;_all&quot;</span>))</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>dtall[dtall[coicop18<span class="sc">==</span><span class="st">&quot;TOTAL&quot;</span>,], </span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">&quot;index_all&quot;</span>,<span class="st">&quot;weight_all&quot;</span>) <span class="sc">:=</span> <span class="fu">list</span>(i.index,i.weight), </span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>      on<span class="ot">=</span><span class="st">&quot;time&quot;</span>]</span>
 <span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a></span>
 <span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="co"># Ribe decomposition:</span></span>
-<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a>dtall[, <span class="st">&quot;ribe&quot;</span> <span class="sc">:=</span> <span class="fu">contrib</span>(<span class="at">x=</span>index, <span class="at">w=</span>weight, <span class="at">t=</span>time, </span>
-<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a>                          <span class="at">x.all=</span>index_all, <span class="at">w.all=</span>weight_all, <span class="at">type=</span><span class="st">&quot;year&quot;</span>),</span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a>dtall[, <span class="st">&quot;ribe&quot;</span> <span class="sc">:=</span> <span class="fu">contributions</span>(<span class="at">x=</span>index, <span class="at">w=</span>weight, <span class="at">t=</span>time,</span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a>                                <span class="at">xagg=</span>index_all, <span class="at">wagg=</span>weight_all, <span class="at">type=</span><span class="st">&quot;year&quot;</span>),</span>
 <span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a>      by<span class="ot">=</span><span class="st">&quot;coicop18&quot;</span>]</span>
 <span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a></span>
-<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a><span class="co"># annual change rates and contribtuions over time:</span></span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a><span class="co"># annual change rates and contributions over time:</span></span>
 <span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a><span class="fu">plot</span>(ar<span class="sc">~</span>time, <span class="at">data=</span>dtall[coicop18<span class="sc">==</span><span class="st">&quot;TOTAL&quot;</span>,], <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Time&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">13</span>))</span>
 <span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a><span class="fu">lines</span>(ribe<span class="sc">~</span>time, <span class="at">data=</span>dtall[coicop18<span class="sc">==</span><span class="st">&quot;CP011&quot;</span>], <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
 <span id="cb21-17"><a href="#cb21-17" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Contributions of food to overall inflation&quot;</span>)</span>
@@ -931,12 +934,11 @@ individual contributions of each expenditure category using the function
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Eurostat2024" class="csl-entry">
 European Commission, Eurostat. 2024. <em><span class="nocase">Harmonised
 Index of Consumer Prices (HICP) - Methodological Manual - 2024
-edition</span></em>. Luxembourg: Publications Office of the European
-Union. <a href="https://doi.org/10.2785/055028">https://doi.org/10.2785/055028</a>.
+edition</span></em>. Publications Office of the European Union. <a href="https://doi.org/10.2785/055028">https://doi.org/10.2785/055028</a>.
 </div>
 <div id="ref-EU2016" class="csl-entry">
 European Union. 2016. <span>“<span class="nocase">Regulation (EU)

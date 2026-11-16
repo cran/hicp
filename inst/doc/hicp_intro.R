@@ -98,10 +98,10 @@ tree(id=ids, w=c(0.2,0.08,0.12,0.05,0.01))
 
 ## ----warning=FALSE------------------------------------------------------------
 # validate codes:
-is.spec.agg(id=c("TOTAL","CP01","FOOD","NRG"))
+is.special.agg(id=c("TOTAL","CP01","FOOD","NRG","AP"))
 
 # get compositions of non-processed food and energy:
-spec.agg(id=c("FOOD_NP","NRG"))
+special.agg(id=c("FOOD_NP","NRG"))
 
 ## ----echo=FALSE---------------------------------------------------------------
 load(file.path("data", "hicp_prices.RData"))
@@ -119,17 +119,20 @@ dtp[, "year":=as.integer(format(time, "%Y"))]
 setnames(x=dtp, old="values", new="index")
 
 ## ----warning=FALSE------------------------------------------------------------
-# unchain price indices:
-dtp[, "dec_ratio" := unchain(x=index, t=time), by="coicop18"]
-
-## ----warning=FALSE------------------------------------------------------------
 # manipulate item weights:
 dtw <- item.weights[geo=="EA", list(coicop18,geo,time,values)]
 dtw[, "time":=as.integer(time)]
 setnames(x=dtw, old=c("time","values"), new=c("year","weight"))
 
-# merge price indices and item weights:
-dtall <- merge(x=dtp, y=dtw, by=c("geo","coicop18","year"), all.x=TRUE)
+# combine price indices and item weights:
+dtall <- CJ("coicop18"=unique(dtw$coicop18), "time"=unique(dtp$time))
+dtall[, "year":=year(time)]
+dtall[dtp, "index":=i.index, on=c("coicop18","time")]
+dtall[dtw, "weight":=i.weight, on=c("coicop18","year")]
+
+## ----warning=FALSE------------------------------------------------------------
+# unchain price indices:
+dtall[, "dec_ratio" := unchain(x=index, t=time), by="coicop18"]
 
 ## ----warning=FALSE, fig.width=7, fig.align="center"---------------------------
 # derive COICOP tree for index aggregation:
@@ -144,59 +147,59 @@ hicp.own <- dtall[tree==TRUE,
 setorderv(x=hicp.own, cols="time")
 
 # chain the resulting index:
-hicp.own[, "chain_laspey" := chain(x=laspey, t=time, by=12)]
+hicp.own[, "index" := chain(x=laspey, t=time, by=12)]
 
 # rebase the index to 2025:
-hicp.own[, "chain_laspey_25" := rebase(x=chain_laspey, t=time, t.ref="2025")]
+hicp.own[, "index25" := rebase(x=index, t=time, t.ref="2025")]
 
 # plot all-items index:
-plot(chain_laspey_25~time, data=hicp.own, type="l", xlab="Time", ylab="Index")
+plot(index25~time, data=hicp.own, type="l", xlab="Time", ylab="Index")
 title("Euro area HICP")
 abline(h=0, lty="dashed")
 
 ## ----warning=FALSE------------------------------------------------------------
 # compute all-items HICP gradually from bottom to top:
-hicp.own.all <- dtall[weight>0 & !is.na(dec_ratio),
-                      aggregate.tree(x=dec_ratio, w0=weight, id=coicop18, formula=laspeyres), 
+hicp.own.all <- dtall[, aggregate.tree(x=dec_ratio, w0=weight, id=coicop18, formula=laspeyres), 
                       by="time"]
 setorderv(x=hicp.own.all, cols="time")
-hicp.own.all[, "chain_laspey" := chain(x=laspeyres, t=time, by=12), by="id"]
-hicp.own.all[, "chain_laspey_25" := rebase(x=chain_laspey, t=time, t.ref="2025"), by="id"]
+hicp.own.all[, "index" := chain(x=laspeyres, t=time, by=12), by="id"]
+hicp.own.all[, "index25" := rebase(x=index, t=time, t.ref="2025"), by="id"]
 
 ## ----warning=FALSE------------------------------------------------------------
 # all-items HICP from direct and gradual aggregation identical:
-all(abs(hicp.own.all[id=="TOTAL", chain_laspey_25]-hicp.own$chain_laspey_25)<0.1)
+dtcomp <- merge(x=hicp.own.all[id=="TOTAL", ], y=hicp.own, by="time", all=TRUE)
+all(dtcomp[, abs(index25.x-index25.y)<0.1], na.rm=TRUE)
 
 ## ----warning=FALSE------------------------------------------------------------
 # compute food and energy by aggregation:
 dtall[time>="2019-12-01",
       aggregate(x=dec_ratio, w0=weight, id=coicop18,
-                agg=spec.agg(id=c("FOOD","NRG")),
-                settings=list(exact=FALSE, names=c("FOOD","NRG"))), 
+                agg=special.agg(id=c("FOOD","NRG")),
+                settings=list(names=c("FOOD","NRG"))), 
       by="time"]
 
 # compute overall index excluding food and energy by disaggregation:
 dtall[time>="2019-12-01",
       disaggregate(x=dec_ratio, w0=weight, id=coicop18,
                    agg=list("TOTAL"=c("FOOD","NRG")),
-                   settings=list(names="TOT_X_FOOD_NRG")), 
+                   settings=list(names="TOT_X_NRG_FOOD")), 
       by="time"]
 
 ## ----warning=FALSE, fig.width=7, fig.height=4, fig.align="center"-------------
 # compute annual rates of change for the all-items HICP:
-dtall[, "ar" := rates(x=index, t=time, type="year"), by=c("geo","coicop18")]
+dtall[, "ar" := rates(x=index, t=time, type="year"), by="coicop18"]
 
 # add all-items HICP:
-dtall <- merge(x=dtall,
-               y=dtall[coicop18=="TOTAL", list(geo,time,index,weight)],
-               by=c("geo","time"), all.x=TRUE, suffixes=c("","_all"))
+dtall[dtall[coicop18=="TOTAL",], 
+      c("index_all","weight_all") := list(i.index,i.weight), 
+      on="time"]
 
 # Ribe decomposition:
-dtall[, "ribe" := contrib(x=index, w=weight, t=time, 
-                          x.all=index_all, w.all=weight_all, type="year"),
+dtall[, "ribe" := contributions(x=index, w=weight, t=time,
+                                xagg=index_all, wagg=weight_all, type="year"),
       by="coicop18"]
 
-# annual change rates and contribtuions over time:
+# annual change rates and contributions over time:
 plot(ar~time, data=dtall[coicop18=="TOTAL",], type="l", xlab="Time", ylab="", ylim=c(-1,13))
 lines(ribe~time, data=dtall[coicop18=="CP011"], col="red")
 title("Contributions of food to overall inflation")
